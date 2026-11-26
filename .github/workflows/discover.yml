@@ -11,7 +11,7 @@ on:
         default: "25"
 permissions:
   contents: write
-concurrency: radar
+concurrency: radar-discover
 jobs:
   run:
     runs-on: ubuntu-latest

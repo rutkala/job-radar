@@ -57,6 +57,10 @@ class Profile:
         self.lang_penalty = M["language_penalty"]
         self.req_lang = rx(M["required_language"])
         self.blocked = rx(M["blocked"])
+        pt = c["parttime"]
+        self.pt_base = pt["base"]
+        self.pt_field, self.pt_title = rx(pt["field"]), rx(pt["title_signal"])
+        self.pt_text, self.pt_exclude = rx(pt["text_signal"]), rx(pt["exclude"])
         self._lang_ctx = re.compile(
             r"(fluent|fluency|native|proficien\w+|business[- ]level|c1|c2|required|mandatory|must|speaker)", re.I)
 
@@ -94,6 +98,41 @@ class Profile:
                 return self.pts["unclear"], "Location unclear, remote mentioned"
             return None
         return None  # a named place outside Poland, or remote tied to another country
+
+    def parttime(self, job):
+        """Part-time, freelance or contract work in the field. Return a match dict, or None."""
+        title, text = job["title"], job["text"]
+        if self.pt_exclude.search(title) or not self.pt_field.search(title):
+            return None
+        if not (self.context.search(title) or self.strong.search(text)):
+            return None
+        strong = self.pt_title.search(f"{title} | {job.get('employment', '')}")
+        weak = self.pt_text.search(text)
+        if not (strong or weak):
+            return None
+        if self.blocked.search(text) or (text and language(text) in self.foreign):
+            return None
+        where = self.place(job)
+        if not where:
+            return None
+        score = self.pt_base + where[0] + (15 if strong else 0)
+        why, extra = [], 0
+        for n, pts, pat in self.bonus:
+            if pat.search(title) or pat.search(text):
+                extra += pts
+                why.append(n)
+        score += min(extra, 30)
+        signal = (strong or weak).group(0).lower()
+        flags = [f"signal: {signal}" + ("" if strong else " (in the text only)")]
+        for m in self.req_lang.finditer(text):
+            if self._lang_ctx.search(text[max(0, m.start() - 60): m.end() + 60]):
+                flags.append(f"may require {m.group(0).title()}")
+                score -= self.lang_penalty
+                break
+        if score < self.min_score:
+            return None
+        return {"score": score, "role": "Part-time / freelance", "where": where[1], "why": why,
+                "flags": flags, "list": "parttime"}
 
     def evaluate(self, job):
         """Return a match dict, or None."""

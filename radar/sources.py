@@ -54,7 +54,8 @@ def _lever(source):
                            ", ".join(x for x in locs if x) + (f" ({wt})" if wt else ""),
                            j.get("hostedUrl"), _ms(j.get("createdAt")),
                            (j.get("descriptionPlain") or "") + " " + (j.get("additionalPlain") or ""),
-                           remote=True if wt == "remote" else None))
+                           remote=True if wt == "remote" else None,
+                           employment=c.get("commitment") or ""))
         return out
     return parse
 
@@ -72,7 +73,8 @@ def ashby_parse(slug, raw):
         out.append(job("ashby", slug, j.get("id"), j.get("title"),
                        ", ".join(x for x in locs if x), j.get("jobUrl"), j.get("publishedAt"),
                        (j.get("descriptionPlain") or j.get("descriptionHtml") or "") + " " + comp,
-                       remote=True if j.get("isRemote") else None))
+                       remote=True if j.get("isRemote") else None,
+                       employment=j.get("employmentType") or ""))
     return out
 
 
@@ -87,7 +89,8 @@ def workable_parse(slug, raw):
         loc = ", ".join(x for x in (j.get("city"), j.get("state"), j.get("country")) if x)
         out.append(job("workable", slug, j.get("shortcode"), j.get("title"), loc,
                        j.get("url") or j.get("shortlink"), j.get("published_on") or j.get("created_at"),
-                       j.get("description"), remote=True if j.get("telecommuting") else None))
+                       j.get("description"), remote=True if j.get("telecommuting") else None,
+                       employment=j.get("employment_type") or ""))
     return out
 
 
@@ -103,7 +106,8 @@ def recruitee_parse(slug, raw):
         out.append(job("recruitee", slug, j.get("id"), j.get("title"), loc,
                        j.get("careers_url"), j.get("published_at") or j.get("created_at"),
                        (j.get("description") or "") + " " + (j.get("requirements") or ""),
-                       remote=True if j.get("remote") else None))
+                       remote=True if j.get("remote") else None,
+                       employment=j.get("employment_type_code") or ""))
     return out
 
 
@@ -119,7 +123,8 @@ def smartrecruiters_parse(slug, raw):
         loc = ", ".join(x for x in (l.get("city"), l.get("region"), l.get("country")) if x)
         out.append(job("smartrecruiters", slug, j.get("id"), j.get("name"), loc,
                        f"https://jobs.smartrecruiters.com/{slug}/{j.get('id')}",
-                       j.get("releasedDate"), "", remote=True if l.get("remote") else None))
+                       j.get("releasedDate"), "", remote=True if l.get("remote") else None,
+                       employment=(j.get("typeOfEmployment") or {}).get("label") or ""))
     return out
 
 

@@ -107,3 +107,15 @@ language_penalty = 25
 required_language = '\b(german|deutsch|french|dutch|spanish|italian|swedish|danish|norwegian|finnish|czech|hebrew|japanese|portuguese|arabic|turkish)\b'
 # Postings with these phrases are dropped: they are closed to someone based in Poland.
 blocked = '\bauthori[sz]ed to work in the (u\.?s\.?|united states)|\bu\.?s\.? citizen|\bsecurity clearance\b|\bmust (reside|be located|be based|live) in the (u\.?s\.?|united states|uk|united kingdom|canada|australia)\b'
+
+# --- Second list: part-time, freelance and contract work in the field ---------
+# A job lands here when its title is in the field AND it shows a part-time or freelance signal.
+# Hands-on roles are welcome here (additional projects); junior and student jobs are not.
+[parttime]
+base = 30
+field = '\b(power ?bi|bi|business intelligence|analytics|analyst|analityk\w*|reporting|dashboards?|fabric|tableau|insights|data (consultant|architect|modell?er|visuali[sz]ation|product|strategist))\b'
+# Strong signal: in the title or in the site's employment type (+15 points).
+title_signal = '\b(part[- ]?time|freelance\w*|fractional|interim|contract(or)?|temporary|consultant|niepe[lł]ny etat|zlecenie)\b'
+# Weaker signal: in the description.
+text_signal = '\bpart[- ]time\b|\bfreelance\w*|\bfractional\b|\b(1[0-9]|2[0-5]) ?(h|hrs|hours)\b.{0,15}\bweek|\b0[.,][2-6] ?fte\b|\bhourly rate\b|\bniepe[lł]n\w+ etat\w*'
+exclude = '\b(intern|internship|junior|trainee|werkstudent|praktik\w*|student|graduate|apprentice|sta[zż]\w*)\b'

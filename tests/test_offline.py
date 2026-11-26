@@ -86,6 +86,20 @@ def test_matching():
     assert bare and bare["where"] == "Remote, region not stated", bare
 
 
+def test_parttime():
+    pt = lambda j: P.parttime(j)
+    a = pt(J("Power BI Developer (Part-time)", "Remote - Europe", BI))
+    assert a and a["list"] == "parttime" and "part-time" in a["flags"][0], a
+    b = pt(J("BI Analyst", "Remote, Poland", BI + " This is a part-time role, 20 hours per week."))
+    assert b and "in the text only" in b["flags"][0] and a["score"] > b["score"], (a, b)
+    c = job("t", "acme", "2", "Data Analyst, Reporting", "Poland (remote)", "u", "", BI, None, "Contract")
+    assert pt(c), c
+    assert pt(J("Freelance Power BI Consultant", "Remote - United States", BI)) is None
+    assert pt(J("Working Student Power BI (part-time)", "Remote - Europe", BI)) is None
+    assert pt(J("BI Analyst", "Remote, Poland", BI)) is None            # full-time, no signal
+    assert pt(J("Part-time Barista", "Warsaw (remote)", "coffee")) is None
+
+
 def test_misc():
     assert language("Wir suchen und bieten für Sie eine Stelle mit der Möglichkeit " * 8) == "de"
     assert language("We are looking for a person who will work with our team and the business " * 6) == "en"
@@ -102,5 +116,5 @@ def test_misc():
 
 
 if __name__ == "__main__":
-    test_parsers(); test_matching(); test_misc()
+    test_parsers(); test_matching(); test_parttime(); test_misc()
     print("all offline checks passed")

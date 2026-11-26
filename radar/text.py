@@ -14,7 +14,7 @@ def plain(s, limit=6000):
     return _WS.sub(" ", s).strip()[:limit]
 
 
-def job(source, company, jid, title, location, url, posted="", text="", remote=None):
+def job(source, company, jid, title, location, url, posted="", text="", remote=None, employment=""):
     return {
         "source": source,
         "company": str(company or ""),
@@ -25,4 +25,5 @@ def job(source, company, jid, title, location, url, posted="", text="", remote=N
         "url": url or "",
         "posted": str(posted or "")[:10],
         "text": plain(text),
+        "employment": plain(employment, 60),
     }

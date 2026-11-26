@@ -112,8 +112,7 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
             for j in jobs:
                 if site == "smartrecruiters" and profile.role_of(j["title"]):
                     enrich_smartrecruiters(j)
-                m = profile.evaluate(j)
-                if m and fresh(j, profile):
+                for m in both(profile, j):
                     st["matches"] += 1
                     found.append((j, m))
     if pace["throttles"] and not st["stopped"]:
@@ -132,6 +131,21 @@ def fresh(job, profile):
     return age <= profile.max_age_days
 
 
+def both(profile, j):
+    """The role match and/or the part-time match for a job (0, 1 or 2 results)."""
+    if not fresh(j, profile):
+        return []
+    out = []
+    m = profile.evaluate(j)
+    if m:
+        m["list"] = "roles"
+        out.append(m)
+    p = profile.parttime(j)
+    if p:
+        out.append(p)
+    return out
+
+
 def run_feed(name, profile, stats, found):
     st = stats[name] = {"companies": 0, "checked": 1, "jobs": 0, "matches": 0,
                         "gone": 0, "errors": 0, "stopped": ""}
@@ -142,8 +156,7 @@ def run_feed(name, profile, stats, found):
         return
     st["jobs"] = len(jobs)
     for j in jobs:
-        m = profile.evaluate(j)
-        if m and fresh(j, profile):
+        for m in both(profile, j):
             st["matches"] += 1
             found.append((j, m))
 
@@ -187,7 +200,7 @@ def main():
     matches = load_json("data/matches.json", {})
     new_ids = []
     for j, m in found:
-        key = j["url"] or j["id"]
+        key = (j["url"] or j["id"]) + ("#parttime" if m["list"] == "parttime" else "")
         rec = matches.get(key)
         if not rec:
             new_ids.append(key)
@@ -201,12 +214,19 @@ def main():
     save_json("data/matches.json", matches)
 
     by_score = lambda ids: sorted((matches[i] for i in ids if i in matches), key=lambda r: -r["score"])
-    new_rows = by_score(new_ids)
-    open_rows = by_score([k for k in matches if k not in set(new_ids)])[:100]
+    new_set = set(new_ids)
+    pick = lambda kind, new: by_score([k for k, v in matches.items()
+                                       if v.get("list", "roles") == kind and (k in new_set) == new])[:100]
+    new_rows, open_rows = pick("roles", True), pick("roles", False)
+    pt_new, pt_open = pick("parttime", True), pick("parttime", False)
+    show = lambda rows, empty: table(rows) if rows else empty
     lines = [f"# Job radar, {TODAY.isoformat()}", "",
-             f"**New today: {len(new_rows)}.** Still open from earlier days: {len(open_rows)}.", "",
-             "## New today", "", table(new_rows) if new_rows else "Nothing new today.", "",
-             "## Still open", "", table(open_rows) if open_rows else "None.", "",
+             f"**Roles: {len(new_rows)} new, {len(open_rows)} still open. "
+             f"Part-time and freelance: {len(pt_new)} new, {len(pt_open)} still open.**", "",
+             "## Roles: new today", "", show(new_rows, "Nothing new today."), "",
+             "## Part-time and freelance: new today", "", show(pt_new, "Nothing new today."), "",
+             "## Roles: still open", "", show(open_rows, "None."), "",
+             "## Part-time and freelance: still open", "", show(pt_open, "None."), "",
              "## What was read", "",
              "| Source | Companies known | Checked today | Jobs read | Matches | Gone | Errors | Note |",
              "|---|---|---|---|---|---|---|---|"]
@@ -219,7 +239,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(report)
     total = sum(s["jobs"] for s in stats.values())
-    print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)}")
+    print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)} roles, {len(pt_new)} part-time")
     for name, s in sorted(stats.items()):
         print(name, s)
 
