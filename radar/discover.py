@@ -61,7 +61,7 @@ def cc_get(url):
     return b""
 
 
-def harvest(api, pattern, kind, max_pages):
+def harvest(api, pattern, kind, max_pages, deadline=float("inf")):
     q = f"{api}?url={quote(pattern, safe='*')}&output=json&fl=url"
     if kind == "sub":
         q += "&matchType=domain"
@@ -77,6 +77,8 @@ def harvest(api, pattern, kind, max_pages):
     pages = [(start + i) % total for i in range(min(total, max_pages))]
     found = set()
     for p in pages:
+        if time.time() > deadline:
+            break
         body = cc_get(f"{q}&page={p}").decode("utf-8", "replace")
         for line in body.splitlines():
             try:
@@ -94,11 +96,19 @@ def main():
     ap.add_argument("--sites", default=",".join(PATTERNS))
     ap.add_argument("--max-pages", type=int, default=25)
     ap.add_argument("--indexes", type=int, default=2, help="how many recent crawls to read")
+    ap.add_argument("--budget-min", type=float, default=95, help="stop starting new work after this long")
     a = ap.parse_args()
+    deadline = time.time() + a.budget_min * 60
     info = json.loads(get("https://index.commoncrawl.org/collinfo.json", timeout=60))
     apis = [c["cdx-api"] for c in info[: a.indexes]]
     os.makedirs("data/companies", exist_ok=True)
-    for site in [s for s in a.sites.split(",") if s]:
+    def size(site):
+        try:
+            with open(f"data/companies/{site}.txt", encoding="utf-8") as f:
+                return sum(1 for _ in f)
+        except OSError:
+            return 0
+    for site in sorted([s for s in a.sites.split(",") if s], key=size):
         path = f"data/companies/{site}.txt"
         known = set()
         if os.path.exists(path):
@@ -107,7 +117,10 @@ def main():
         before = len(known)
         for api in apis:
             for pattern, kind in PATTERNS[site]:
-                found, read, total = harvest(api, pattern, kind, a.max_pages)
+                if time.time() > deadline:
+                    print(f"{site}: {pattern} skipped, time budget reached", flush=True)
+                    continue
+                found, read, total = harvest(api, pattern, kind, a.max_pages, deadline)
                 known |= found
                 print(f"{site}: {pattern} in {api.rsplit('/', 1)[-1]}: {len(found)} companies "
                       f"from {read} of {total} pages", flush=True)

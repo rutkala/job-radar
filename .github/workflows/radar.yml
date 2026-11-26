@@ -32,6 +32,7 @@ jobs:
       - name: Show the report
         run: cat reports/latest.md >> "$GITHUB_STEP_SUMMARY"
       - name: Save results
+        if: always()
         run: |
           git config user.name "job-radar"
           git config user.email "job-radar@users.noreply.github.com"

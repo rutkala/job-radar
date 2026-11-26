@@ -27,6 +27,7 @@ jobs:
           if [ "${{ github.event_name }}" = "push" ]; then read -r PAGES < trigger/discover.txt; fi
           python -m radar.discover --max-pages "$PAGES"
       - name: Save the company lists
+        if: always()
         run: |
           git config user.name "job-radar"
           git config user.email "job-radar@users.noreply.github.com"
