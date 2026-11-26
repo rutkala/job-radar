@@ -72,6 +72,9 @@ def test_matching():
                     "Wir suchen für unser Team eine Person mit Erfahrung in Power BI und Analytics. Sie arbeiten mit "
                     "den Fachbereichen und sind für die Roadmap verantwortlich. Wir bieten eine flexible Arbeit und "
                     "die Möglichkeit, mit einem starken Team zu wachsen. Ihre Aufgaben sind nicht nur technisch." * 2))
+    assert not ok(J("Senior Product Manager", "Warsaw (remote)", "You use analytics and dashboards to track KPIs. " * 4))
+    assert not ok(J("Director, Analytics", "Pune, India | Remote - India", BI + " We have offices in Poland."))
+    assert ok(J("Team Lead Business Intelligence", "Berlin, Germany", BI + " You can work remote from anywhere in Europe."))
     # flags and ranking
     m = P.evaluate(J("Power BI Consultant", "Remote - Europe", BI + " Fluent German is required."))
     assert m is None or any("German" in f for f in m["flags"]), m

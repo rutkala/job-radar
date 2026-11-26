@@ -8,10 +8,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from . import feeds, sources
-from .http import Gone, Throttled, get
+from .http import Gone, Refused, Throttled, get
 from .match import Profile
 from .text import plain
 
+# Requests in parallel per site (default: --workers). Lower for sites that ask to slow down.
+PACE = {"greenhouse": 4, "workable": 2, "personio": 2, "recruitee": 3}
 TODAY = dt.date.today()
 DAY = TODAY.toordinal()
 
@@ -62,17 +64,34 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
                         "gone": 0, "errors": 0, "stopped": ""}
     deadline = time.time() + budget_s
     stop = threading.Event()
+    pace = {"pause_until": 0.0, "throttles": 0, "sample": site == "traffit"}
+    lock = threading.Lock()
+    workers = min(workers, PACE.get(site, workers))
 
     def one(slug):
+        wait = pace["pause_until"] - time.time()
+        if wait > 0:
+            time.sleep(wait)
         if stop.is_set() or time.time() > deadline:
             return slug, None, "skip"
         try:
-            return slug, parse(slug, get(url_of(slug), headers=headers)), ""
+            raw = get(url_of(slug), headers=headers)
+            if pace["sample"]:
+                pace["sample"] = False
+                print(f"sample {site}/{slug}: {raw[:1800]!r}", flush=True)
+            return slug, parse(slug, raw), ""
         except Gone:
             return slug, None, "gone"
-        except Throttled as e:
-            stop.set()
-            st["stopped"] = str(e)[:80]
+        except Refused:
+            return slug, None, "gone"
+        except Throttled:
+            # The site asked us to slow down: everyone waits, and the company is retried next run.
+            with lock:
+                pace["throttles"] += 1
+                pace["pause_until"] = time.time() + 45
+                if pace["throttles"] >= 12:
+                    stop.set()
+                    st["stopped"] = "asked to slow down 12 times; the rest waits for the next run"
             return slug, None, "skip"
         except Exception:
             return slug, None, "error"
@@ -94,12 +113,23 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
                 if site == "smartrecruiters" and profile.role_of(j["title"]):
                     enrich_smartrecruiters(j)
                 m = profile.evaluate(j)
-                if m:
+                if m and fresh(j, profile):
                     st["matches"] += 1
                     found.append((j, m))
+    if pace["throttles"] and not st["stopped"]:
+        st["stopped"] = f"slowed down {pace['throttles']} times"
     if time.time() > deadline and not st["stopped"]:
         st["stopped"] = "time budget reached; the rest is checked on the next runs"
     save_json(f"data/state/{site}.json", state)
+
+
+def fresh(job, profile):
+    """False when the posting date is known and older than the profile allows."""
+    try:
+        age = (TODAY - dt.date.fromisoformat(job["posted"][:10])).days
+    except Exception:
+        return True
+    return age <= profile.max_age_days
 
 
 def run_feed(name, profile, stats, found):
@@ -113,7 +143,7 @@ def run_feed(name, profile, stats, found):
     st["jobs"] = len(jobs)
     for j in jobs:
         m = profile.evaluate(j)
-        if m:
+        if m and fresh(j, profile):
             st["matches"] += 1
             found.append((j, m))
 

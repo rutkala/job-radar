@@ -3,6 +3,7 @@
 
 min_score = 45          # a job needs at least this score to be reported
 keep_days = 14          # how long a match stays in the "still open" list
+max_age_days = 120      # postings older than this are dropped (when the date is known)
 
 # --- Roles: matched on the job title --------------------------------------
 # needs_context = true: the title or the description must also be about data/BI/analytics.
@@ -67,6 +68,8 @@ title = '\bengineering (manager|lead|director)\b|\b(intern|internship|junior|tra
 
 # --- What "about data/BI/analytics" means -----------------------------------
 [context]
+# For roles with needs_context: the title must match `any`, or the description must match `strong`.
+strong = '\b(power ?bi|microsoft fabric|business intelligence|bi (team|platform|tools?|reports?|developers?|solutions?)|semantic model|data products?|data platform|data warehouse|lakehouse|tableau|looker|qlik|people analytics|hr analytics|workforce analytics|management reporting|reporting (platform|solutions?|products?))\b'
 any = '\b(power ?bi|microsoft fabric|business intelligence|bi|analytics|dashboards?|reporting|semantic model|data products?|data platform|kpis?|data visuali[sz]ation|tableau|looker|qlik|people analytics|hr analytics|workforce analytics|data warehouse|lakehouse)\b'
 
 # --- Extra points for words in the description (name = [points, pattern]) ----
@@ -86,6 +89,8 @@ any = '\b(power ?bi|microsoft fabric|business intelligence|bi|analytics|dashboar
 poland = '\b(poland|polska|polen|warsaw|warszawa|krak[oó]w|cracow|wroc[lł]aw|gda[nń]sk|gdynia|pozna[nń]|katowice|[lł][oó]d[zź]|szczecin|lublin|rzesz[oó]w)\b'
 europe = '\b(europe|european|emea|eu|cee|eastern europe|central europe|worldwide|anywhere|global|international)\b'
 remote = '\b(remote|remotely|zdaln\w*|home ?office|work from home|distributed|telecommut\w*)\b'
+# A job located elsewhere still counts when its text says this (remote from Poland or Europe):
+remote_from = '\bremote\W+(?:\w+\W+){0,4}(poland|europe|eu|emea|cee)\b|\b(based|located|anywhere|work(ing)?) (in|from|within|across) (europe|the eu|emea|poland)\b'
 # Points
 poland_remote = 30
 europe_remote = 25

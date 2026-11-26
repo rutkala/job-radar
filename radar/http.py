@@ -13,7 +13,11 @@ class Gone(Exception):
 
 
 class Throttled(Exception):
-    """The site asked us to slow down (429/403): stop this source for the run."""
+    """The site asked us to slow down (429)."""
+
+
+class Refused(Exception):
+    """This one address is not public (401/403)."""
 
 
 def get(url, timeout=25, retries=2, data=None, headers=None):
@@ -31,8 +35,10 @@ def get(url, timeout=25, retries=2, data=None, headers=None):
         except urllib.error.HTTPError as e:
             if e.code in (404, 410):
                 raise Gone(url)
-            if e.code in (429, 403):
-                raise Throttled(f"{e.code} {url}")
+            if e.code == 429:
+                raise Throttled(f"429 {url}")
+            if e.code in (401, 403):
+                raise Refused(url)
             last = e
         except Exception as e:  # timeouts, resets
             last = e

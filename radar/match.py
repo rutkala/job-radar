@@ -41,12 +41,15 @@ class Profile:
         rx = lambda p: re.compile(p, re.I)
         self.min_score = c["min_score"]
         self.keep_days = c["keep_days"]
+        self.max_age_days = c.get("max_age_days", 120)
         self.roles = [(r["name"], r["weight"], r["needs_context"], rx(r["title"])) for r in c["role"]]
         self.exclude = rx(c["exclude"]["title"])
         self.context = rx(c["context"]["any"])
+        self.strong = rx(c["context"]["strong"])
         self.bonus = [(n, v[0], rx(v[1])) for n, v in c["bonus"].items()]
         L = c["location"]
         self.poland, self.europe, self.remote = rx(L["poland"]), rx(L["europe"]), rx(L["remote"])
+        self.remote_from = rx(L["remote_from"])
         self.pts = {k: L[k] for k in ("poland_remote", "poland_remote_in_text", "europe_remote",
                                       "poland_office", "unclear")}
         M = c["limits"]
@@ -84,8 +87,8 @@ class Profile:
             if self.poland.search(text) or self.europe.search(text):
                 return self.pts["europe_remote"] - 10, "Remote, region not stated"
             return self.pts["unclear"], "Remote, region not stated"
-        if is_remote and self.poland.search(text):
-            return self.pts["europe_remote"], "Remote, Poland named in the text"
+        if self.remote_from.search(text):
+            return self.pts["europe_remote"] - 5, "Text says remote from Poland or Europe"
         if not loc.strip():
             if self.remote.search(text) and (self.poland.search(text) or self.europe.search(text)):
                 return self.pts["unclear"], "Location unclear, remote mentioned"
@@ -99,9 +102,8 @@ class Profile:
             return None
         name, weight, needs = role
         title, text = job["title"], job["text"]
-        if needs and not self.context.search(title):
-            if len({m.group(0).lower() for m in self.context.finditer(text)}) < 2:
-                return None
+        if needs and not self.context.search(title) and not self.strong.search(text):
+            return None
         if self.blocked.search(text):
             return None
         if text and language(text) in self.foreign:
