@@ -1,0 +1,36 @@
+name: Radar
+on:
+  schedule:
+    - cron: "17 4 * * *"   # every day, 04:17 UTC
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Companies per site (0 = all that are due)"
+        default: "0"
+      budget:
+        description: "Minutes per site"
+        default: "30"
+permissions:
+  contents: write
+concurrency: radar
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Read job lists and write the report
+        run: python -m radar.run --limit "${{ inputs.limit || '0' }}" --budget-min "${{ inputs.budget || '30' }}"
+      - name: Show the report
+        run: cat reports/latest.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Save results
+        run: |
+          git config user.name "job-radar"
+          git config user.email "job-radar@users.noreply.github.com"
+          git add data reports
+          git diff --cached --quiet || git commit -m "Radar run $(date -u +%F)"
+          git pull --rebase
+          git push

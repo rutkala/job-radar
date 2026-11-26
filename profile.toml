@@ -1,0 +1,104 @@
+# What the radar looks for. Edit this file to change the search; no code changes needed.
+# All patterns are regular expressions, matched without regard to upper/lower case.
+
+min_score = 45          # a job needs at least this score to be reported
+keep_days = 14          # how long a match stays in the "still open" list
+
+# --- Roles: matched on the job title --------------------------------------
+# needs_context = true: the title or the description must also be about data/BI/analytics.
+
+[[role]]
+name = "Product Owner / Manager (data, BI)"
+weight = 40
+needs_context = true
+title = '\bproduct (owner|manager|lead)\b'
+
+[[role]]
+name = "Pre-sales / solutions"
+weight = 35
+needs_context = true
+title = '\b(pre-?sales|solutions? (consultant|engineer|advisor|architect|specialist)|sales engineer|value engineer)\b'
+
+[[role]]
+name = "BI / analytics lead"
+weight = 35
+needs_context = false
+title = '\b(head|lead|principal|manager|director|kierownik|lider)\b.{0,25}\b(bi|business intelligence|analytics|data analy\w+|reporting|insights)\b|\b(bi|business intelligence|analytics|reporting|insights)\b.{0,15}\b(lead|manager|head|director)\b'
+
+[[role]]
+name = "BI / analytics consultant or architect"
+weight = 30
+needs_context = false
+title = '\b(bi|business intelligence|power ?bi|analytics|fabric)\b.{0,25}\b(consultant|architect|advisor|strategist|translator|business partner)\b|\b(consultant|konsultant\w*|architect|architekt|advisor|doradca)\b.{0,25}\b(bi|business intelligence|power ?bi|analytics|fabric)\b'
+
+[[role]]
+name = "AI adoption / enablement"
+weight = 35
+needs_context = false
+title = '\b(ai|genai|copilot)\b.{0,30}\b(adoption|enablement|transformation|change|coach|business partner|strategy|product owner|consultant|advisor)\b'
+
+[[role]]
+name = "Fractional / interim"
+weight = 35
+needs_context = true
+title = '\b(fractional|interim)\b'
+
+[[role]]
+name = "Business analyst (data, BI)"
+weight = 20
+needs_context = true
+title = '\bbusiness (systems |intelligence )?analyst\b|\banalityk biznesow'
+
+[[role]]
+name = "Trainer"
+weight = 20
+needs_context = true
+title = '\b(trainer|instructor|trener)\b'
+
+[[role]]
+name = "Hands-on Power BI / Fabric (additional projects)"
+weight = 15
+needs_context = false
+title = '\b(power ?bi|microsoft fabric|fabric)\b'
+
+# --- Titles that are never reported ----------------------------------------
+[exclude]
+title = '\b(intern|internship|junior|trainee|werkstudent|praktik\w*|student|graduate|apprentice|sta[zż]\w*)\b|\b(software|backend|back-end|frontend|front-end|full-?stack|devops|site reliability|machine learning|ml|security|qa|test|network|hardware|mechanical|electrical) (engineer|developer)\b'
+
+# --- What "about data/BI/analytics" means -----------------------------------
+[context]
+any = '\b(power ?bi|microsoft fabric|business intelligence|bi|analytics|dashboards?|reporting|semantic model|data products?|data platform|kpis?|data visuali[sz]ation|tableau|looker|qlik|people analytics|hr analytics|workforce analytics|data warehouse|lakehouse)\b'
+
+# --- Extra points for words in the description (name = [points, pattern]) ----
+[bonus]
+"Power BI" = [10, '\bpower ?bi\b']
+"Fabric" = [8, '\bmicrosoft fabric\b|\bfabric (lakehouse|warehouse|capacity)\b']
+"HR analytics" = [8, '\b(people|hr|workforce) analytics\b']
+"Self-service" = [3, '\bself-?service\b']
+"Stakeholders" = [2, '\bstakeholders?\b']
+"Requirements" = [2, '\brequirements?\b']
+"Roadmap" = [2, '\broadmap\b']
+"Contract / B2B" = [5, '\b(b2b|contractor|freelance|contract role|kontrakt)\b']
+"AI" = [4, '\b(copilot|genai|generative ai|ai agents?|llm)\b']
+
+# --- Location ----------------------------------------------------------------
+[location]
+poland = '\b(poland|polska|polen|warsaw|warszawa|krak[oó]w|cracow|wroc[lł]aw|gda[nń]sk|gdynia|pozna[nń]|katowice|[lł][oó]d[zź]|szczecin|lublin|rzesz[oó]w)\b'
+europe = '\b(europe|european|emea|eu|cee|eastern europe|central europe|worldwide|anywhere|global|international)\b'
+remote = '\b(remote|remotely|zdaln\w*|home ?office|work from home|distributed|telecommut\w*)\b'
+# Points
+poland_remote = 30
+europe_remote = 25
+poland_remote_in_text = 20
+poland_office = 10
+unclear = 10
+
+# --- Languages and legal limits ----------------------------------------------
+[limits]
+# A posting written in one of these languages is dropped (Polish and English are kept).
+foreign_languages = ["de", "fr", "nl", "es", "it", "pt", "sv", "da", "no", "fi", "cs"]
+# A required language other than Polish/English costs these points and is flagged.
+language_penalty = 25
+required_language = '\b(german|deutsch|french|dutch|spanish|italian|swedish|danish|norwegian|finnish|czech|hebrew|japanese|portuguese|arabic|turkish)\b'
+# Postings with these phrases are dropped: they are closed to someone based in Poland.
+blocked = '\bauthori[sz]ed to work in the (u\.?s\.?|united states)|\bu\.?s\.? citizen|\bsecurity clearance\b|\bmust (reside|be located|be based|live) in the (u\.?s\.?|united states|uk|united kingdom|canada|australia)\b'

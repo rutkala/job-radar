@@ -1,0 +1,134 @@
+"""Decide whether a job fits the profile, and how well. Pure code, no AI."""
+import re
+import tomllib
+
+STOP = {
+    "en": "the and for with you our are will that this your have from work team",
+    "pl": "oraz dla jest się nie przez które jako pracy lub także naszych wymagania oferujemy",
+    "de": "und der die das für mit wir sie ihre einen eine nicht auch wird oder sowie bei",
+    "fr": "les des pour vous nous avec une dans est sur que notre votre aux",
+    "nl": "het een voor van met jij wij onze naar ook bij zijn wordt je",
+    "es": "los las para con una del que por nuestro como más sus",
+    "it": "per con che del una gli nel alla sono nostro delle anche",
+    "pt": "para com uma que dos nos como você nossa mais são",
+    "sv": "och för med att som det vi dig vår har eller till",
+    "da": "og for med til som det vi dig vores har eller af",
+    "no": "og for med til som det vi deg vår har eller av",
+    "fi": "ja on että sekä tai meillä sinulla kanssa myös olet",
+    "cs": "pro nebo jsme jako které práce naše budete také máte",
+}
+STOP = {k: set(v.split()) for k, v in STOP.items()}
+_WORD = re.compile(r"[^\W\d_]+", re.UNICODE)
+
+
+def language(text):
+    """Best guess of the posting language from common words; '' if unsure."""
+    words = [w.lower() for w in _WORD.findall(text[:4000])]
+    if len(words) < 40:
+        return ""
+    best, hits = "", 0
+    for lang, stop in STOP.items():
+        n = sum(1 for w in words if w in stop)
+        if n > hits:
+            best, hits = lang, n
+    return best if hits / len(words) >= 0.05 else ""
+
+
+class Profile:
+    def __init__(self, path="profile.toml"):
+        with open(path, "rb") as f:
+            c = tomllib.load(f)
+        rx = lambda p: re.compile(p, re.I)
+        self.min_score = c["min_score"]
+        self.keep_days = c["keep_days"]
+        self.roles = [(r["name"], r["weight"], r["needs_context"], rx(r["title"])) for r in c["role"]]
+        self.exclude = rx(c["exclude"]["title"])
+        self.context = rx(c["context"]["any"])
+        self.bonus = [(n, v[0], rx(v[1])) for n, v in c["bonus"].items()]
+        L = c["location"]
+        self.poland, self.europe, self.remote = rx(L["poland"]), rx(L["europe"]), rx(L["remote"])
+        self.pts = {k: L[k] for k in ("poland_remote", "poland_remote_in_text", "europe_remote",
+                                      "poland_office", "unclear")}
+        M = c["limits"]
+        self.foreign = set(M["foreign_languages"])
+        self.lang_penalty = M["language_penalty"]
+        self.req_lang = rx(M["required_language"])
+        self.blocked = rx(M["blocked"])
+        self._lang_ctx = re.compile(
+            r"(fluent|fluency|native|proficien\w+|business[- ]level|c1|c2|required|mandatory|must|speaker)", re.I)
+
+    def role_of(self, title):
+        """Best role whose title pattern matches, ignoring context. None if excluded."""
+        if self.exclude.search(title):
+            return None
+        best = None
+        for name, weight, needs, pat in self.roles:
+            if pat.search(title) and (best is None or weight > best[1]):
+                best = (name, weight, needs)
+        return best
+
+    def place(self, job):
+        """Return (points, label) or None when the job is not open to Poland."""
+        loc, title, text = job["location"], job["title"], job["text"]
+        head = f"{loc} {title}"
+        is_remote = bool(job.get("remote")) or bool(self.remote.search(head))
+        if self.poland.search(head):
+            if is_remote:
+                return self.pts["poland_remote"], "Poland, remote"
+            if self.remote.search(text):
+                return self.pts["poland_remote_in_text"], "Poland, remote mentioned in the text"
+            return self.pts["poland_office"], "Poland, office or hybrid"
+        if is_remote and self.europe.search(loc):
+            return self.pts["europe_remote"], "Remote, Europe or worldwide"
+        if is_remote and not self.remote.sub("", loc).strip(" ,-()|/"):
+            if self.poland.search(text) or self.europe.search(text):
+                return self.pts["europe_remote"] - 10, "Remote, region not stated"
+            return self.pts["unclear"], "Remote, region not stated"
+        if is_remote and self.poland.search(text):
+            return self.pts["europe_remote"], "Remote, Poland named in the text"
+        if not loc.strip():
+            if self.remote.search(text) and (self.poland.search(text) or self.europe.search(text)):
+                return self.pts["unclear"], "Location unclear, remote mentioned"
+            return None
+        return None  # a named place outside Poland, or remote tied to another country
+
+    def evaluate(self, job):
+        """Return a match dict, or None."""
+        role = self.role_of(job["title"])
+        if not role:
+            return None
+        name, weight, needs = role
+        title, text = job["title"], job["text"]
+        if needs and not self.context.search(title):
+            if len({m.group(0).lower() for m in self.context.finditer(text)}) < 2:
+                return None
+        if self.blocked.search(text):
+            return None
+        if text and language(text) in self.foreign:
+            return None
+        where = self.place(job)
+        if not where:
+            return None
+        score = weight + where[0]
+        why = []
+        extra = 0
+        for n, pts, pat in self.bonus:
+            if pat.search(title) or pat.search(text):
+                extra += pts
+                why.append(n)
+        score += min(extra, 30)
+        flags = []
+        for m in self.req_lang.finditer(text):
+            window = text[max(0, m.start() - 60): m.end() + 60]
+            if self._lang_ctx.search(window):
+                flags.append(f"may require {m.group(0).title()}")
+                score -= self.lang_penalty
+                break
+        if re.search(r"\bdach\b|\(m/w/d\)", title, re.I):
+            flags.append("German-speaking market")
+            score -= 15
+        if where[1].startswith("Poland, office"):
+            flags.append("office days")
+        if score < self.min_score:
+            return None
+        return {"score": score, "role": name, "where": where[1], "why": why, "flags": flags}
