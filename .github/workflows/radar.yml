@@ -1,5 +1,7 @@
 name: Radar
 on:
+  push:
+    paths: ["trigger/radar.txt"]   # a push that changes this file starts a run with its settings
   schedule:
     - cron: "17 4 * * *"   # every day, 04:17 UTC
   workflow_dispatch:
@@ -23,7 +25,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Read job lists and write the report
-        run: python -m radar.run --limit "${{ inputs.limit || '0' }}" --budget-min "${{ inputs.budget || '30' }}"
+        run: |
+          LIMIT="${{ inputs.limit || '0' }}"; BUDGET="${{ inputs.budget || '30' }}"
+          if [ "${{ github.event_name }}" = "push" ]; then read -r LIMIT BUDGET < trigger/radar.txt; fi
+          python -m radar.run --limit "$LIMIT" --budget-min "$BUDGET"
       - name: Show the report
         run: cat reports/latest.md >> "$GITHUB_STEP_SUMMARY"
       - name: Save results
