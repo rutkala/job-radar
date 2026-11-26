@@ -63,7 +63,7 @@ title = '\b(power ?bi|microsoft fabric|fabric)\b'
 
 # --- Titles that are never reported ----------------------------------------
 [exclude]
-title = '\b(intern|internship|junior|trainee|werkstudent|praktik\w*|student|graduate|apprentice|sta[zż]\w*)\b|\b(software|backend|back-end|frontend|front-end|full-?stack|devops|site reliability|machine learning|ml|security|qa|test|network|hardware|mechanical|electrical) (engineer|developer)\b'
+title = '\bengineering (manager|lead|director)\b|\b(intern|internship|junior|trainee|werkstudent|praktik\w*|student|graduate|apprentice|sta[zż]\w*)\b|\b(software|backend|back-end|frontend|front-end|full-?stack|devops|site reliability|machine learning|ml|security|qa|test|network|hardware|mechanical|electrical) (engineer|developer)\b'
 
 # --- What "about data/BI/analytics" means -----------------------------------
 [context]
