@@ -50,6 +50,65 @@ def slug_from(url, kind):
     return s if SLUG.match(s) and s not in RESERVED else ""
 
 
+# Ready-made public directories of company names per site (checked first: one small download each).
+LASTROUND_CSV = ("https://datahub.io/lastroundai-hiring-data/lastroundai-hiring-data/_r/-/ats-directory/"
+                 "lastroundai-ats-company-directory-2026-08.csv")   # CC BY 4.0, LastRound AI
+OPEN_JOBS_JSON = "https://raw.githubusercontent.com/ConorsCode/open-jobs-data/main/companies.json"  # MIT
+
+
+def parse_lastround(text):
+    """CSV with columns ats_vendor, company_name, board_slug, last_crawled -> {site: {slugs}}."""
+    import csv
+    import io
+    out = {}
+    for row in csv.DictReader(io.StringIO(text)):
+        site, slug = (row.get("ats_vendor") or "").strip().lower(), (row.get("board_slug") or "").strip().lower()
+        if site in PATTERNS and SLUG.match(slug) and slug not in RESERVED:
+            out.setdefault(site, set()).add(slug)
+    return out
+
+
+def parse_open_jobs(text):
+    """JSON list of {name, platform, slug} -> {site: {slugs}}."""
+    data = json.loads(text)
+    if isinstance(data, dict):
+        data = data.get("companies") or []
+    out = {}
+    for c in data:
+        site, slug = str(c.get("platform") or "").lower(), str(c.get("slug") or "").lower()
+        if site in PATTERNS and SLUG.match(slug) and slug not in RESERVED:
+            out.setdefault(site, set()).add(slug)
+    return out
+
+
+def directories():
+    found = {}
+    for name, url, parse in (("LastRound directory", LASTROUND_CSV, parse_lastround),
+                             ("open-jobs-data", OPEN_JOBS_JSON, parse_open_jobs)):
+        try:
+            part = parse(get(url, timeout=120).decode("utf-8", "replace"))
+        except Exception as e:
+            print(f"{name}: not read ({type(e).__name__}: {e})"[:160], flush=True)
+            continue
+        for site, slugs in part.items():
+            found.setdefault(site, set()).update(slugs)
+        print(f"{name}: " + ", ".join(f"{k} {len(v)}" for k, v in sorted(part.items())), flush=True)
+    return found
+
+
+def wayback(pattern, kind, limit=150000):
+    """The Internet Archive's index of addresses it has seen: a second, larger archive."""
+    target = f"*.{pattern}" if kind == "sub" else pattern
+    url = (f"https://web.archive.org/cdx/search/cdx?url={quote(target, safe='*')}"
+           f"&fl=original&collapse=urlkey&from=2025&limit={limit}")
+    try:
+        body = get(url, timeout=240, retries=1).decode("utf-8", "replace")
+    except Exception as e:
+        print(f"wayback {pattern}: not read ({type(e).__name__})", flush=True)
+        return set()
+    return {s for s in (slug_from(line.strip(), kind) for line in body.splitlines()) if s}
+
+
 def cc_get(url):
     for attempt in range(5):
         try:
@@ -102,6 +161,7 @@ def main():
     info = json.loads(get("https://index.commoncrawl.org/collinfo.json", timeout=60))
     apis = [c["cdx-api"] for c in info[: a.indexes]]
     os.makedirs("data/companies", exist_ok=True)
+    ready = directories()
     def size(site):
         try:
             with open(f"data/companies/{site}.txt", encoding="utf-8") as f:
@@ -115,6 +175,12 @@ def main():
             with open(path, encoding="utf-8") as f:
                 known = {l.strip().lower() for l in f if l.strip() and not l.startswith("#")}
         before = len(known)
+        known |= ready.get(site, set())
+        for pattern, kind in PATTERNS[site]:
+            if time.time() < deadline:
+                got = wayback(pattern, kind)
+                known |= got
+                print(f"{site}: {pattern} in the Internet Archive: {len(got)} companies", flush=True)
         for api in apis:
             for pattern, kind in PATTERNS[site]:
                 if time.time() > deadline:

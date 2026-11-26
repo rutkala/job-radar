@@ -91,6 +91,11 @@ def test_misc():
     assert slug_from("https://acme.recruitee.com/o/x", "sub") == "acme"
     assert slug_from("https://www.teamtailor.com/en/", "sub") == ""
     assert slug_from("https://acme.jobs.personio.de/job/1", "sub") == "acme"
+    from radar.discover import parse_lastround, parse_open_jobs
+    d = parse_lastround("ats_vendor,company_name,board_slug,last_crawled\nlever,Acme,Acme-Co,2026-08-01\nworkday,X,x,2026-08-01\n")
+    assert d == {"lever": {"acme-co"}}, d
+    o = parse_open_jobs(json.dumps([{"name": "A", "platform": "ashby", "slug": "a-co"}, {"name": "W", "platform": "workday", "tenant": "w"}]))
+    assert o == {"ashby": {"a-co"}}, o
 
 
 if __name__ == "__main__":

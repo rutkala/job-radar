@@ -6,7 +6,9 @@ only the ones that fit `profile.toml`. The result is one short list: `reports/la
 ## How it works
 
 1. **Discover** (weekly): finds which companies use each applicant-tracking site and adds them to
-   `data/companies/<site>.txt`. The source is Common Crawl, a free public archive of the web.
+   `data/companies/<site>.txt`. The sources are two public web archives (Common Crawl and the
+   Internet Archive) and two public directories: the LastRound AI ATS Company Directory (CC BY 4.0)
+   and ConorsCode/open-jobs-data (MIT).
 2. **Collect** (daily): reads each company's public job list, plus six job-board feeds.
 3. **Filter** (same run): keeps jobs whose title matches a role in `profile.toml`, that are open to
    someone in Poland, and that are written in English or Polish. Each kept job gets a score.
