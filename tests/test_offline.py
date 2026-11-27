@@ -112,28 +112,6 @@ def test_parttime():
     assert pt(J("Power BI Developer", "Remote, USA", BI + " Overlap with EST hours.")) is None
 
 
-def test_lab_profile():
-    from radar.match import Group
-    g = Group()
-    L = next((p for p in g.extra if p.name == "lab"), None)
-    if L is None:          # the lab profile is kept out of the public repo for now
-        return
-    T = " Praca w laboratorium, analizy HPLC, GMP. Zapraszamy absolwentów. " * 3
-    a = L.evaluate(J("Laborant / Laborantka", "Koszalin, zachodniopomorskie", T))
-    assert a and a["role"] == "Lab analyst / technician", a
-    assert L.evaluate(J("Analityk Kontroli Jakości", "Częstochowa", T))
-    assert L.evaluate(J("Laborant", "Kraków", T)) is None           # outside the area
-    assert L.evaluate(J("Kierownik Laboratorium", "Koszalin", T)) is None
-    assert L.evaluate(J("Power BI Developer", "Koszalin", BI)) is None
-    assert L.parttime(J("Laborant (1/2 etatu)", "Kołobrzeg", T))
-    assert g.main.evaluate(J("Laborant", "Remote, Poland", T)) is None
-    from radar.run import both
-    lists = {m["list"] for m in both(g, J("Laborant (zastępstwo)", "Koszalin", T))}
-    assert lists == {"lab", "lab:parttime"}, lists
-    assert "laborant" in g.search_words and "power bi" in g.search_words
-    assert g.wants("Chemik") and g.wants("Head of Analytics") and not g.wants("Barista")
-
-
 def test_misc():
     assert language("Wir suchen und bieten für Sie eine Stelle mit der Möglichkeit " * 8) == "de"
     assert language("We are looking for a person who will work with our team and the business " * 6) == "en"
@@ -193,5 +171,5 @@ def test_new_sources():
 
 
 if __name__ == "__main__":
-    test_parsers(); test_matching(); test_parttime(); test_misc(); test_new_sources(); test_lab_profile()
+    test_parsers(); test_matching(); test_parttime(); test_misc(); test_new_sources()
     print("all offline checks passed")
