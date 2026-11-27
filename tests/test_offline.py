@@ -105,6 +105,8 @@ def test_parttime():
     assert "audit" in au["role"] and "up to a month" in au["role"], au
     assert pt(J("BI Analyst", "Remote, Poland", BI + " Flexible working hours.")) is None   # perk only
     assert pt(J("BI Analyst", "Remote, Poland", BI + " Freelance, flexible hours.")) is not None
+    assert pt(J("BI Analyst", "Remote, Poland", BI + " B2B contract or independent contractor.")) is None
+    assert pt(J("Fund Reporting Analyst", "Warsaw, remote", BI + " Prepare interim reports; review dashboards.")) is None
     us = BI + " Independent contractor, anywhere. Overlap with EST hours."
     assert pt(J("Power BI Developer", "Remote, USA", us))["where"].startswith("Remote, other timezone")
     assert pt(J("Power BI Developer", "Remote, USA", BI + " Overlap with EST hours.")) is None

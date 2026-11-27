@@ -141,7 +141,8 @@ pattern = '\b(freelance\w*|contract(or)?|b2b|zlecenie|self-employed|1099)\b'
 name = "freelance / contract (in text)"
 points = 6
 where = "text"
-pattern = '\b(freelance\w*|independent contractor|contract role|b2b contract|umowa b2b|hourly rate|day rate|stawka godzinowa)\b'
+pattern = '\b(freelance\w*|independent contractor|contract role|hourly rate|day rate|stawka godzinowa)\b'
+alone = false   # supports other signals; a contractor job is not part-time by itself
 
 [[parallel]]
 name = "flexible hours"
@@ -160,7 +161,7 @@ pattern = '\b(us|u\.s\.|north american?|americas|pacific|eastern|central|apac|au
 name = "fractional / interim"
 points = 15
 where = "both"
-pattern = '\b(fractional|interim)\b'
+pattern = '\bfractional (cfo|cdo|head|lead|director|analyst|bi|data|analytics|consultant)\w*|\binterim (head|lead|director|manager|cdo|bi|data|analytics)\b|^(fractional|interim)\b'
 
 [[parallel]]
 name = "short-term (up to 12 months)"
@@ -178,4 +179,4 @@ pattern = '\b([1-4]|one|two|three|four)[- ]?(weeks?|tygodni\w*)\b.{0,20}\b(proje
 name = "audit / assessment"
 points = 15
 where = "both"
-pattern = '\b(audit|assessment|health ?check|review|optimi[sz]ation|audyt)\b.{0,25}\b(power ?bi|bi|reports?|dashboards?|data models?|semantic models?|fabric|tenant|capacity|analytics)\b|\b(power ?bi|bi|fabric|dashboard|data model|semantic model|tenant|capacity)\b.{0,15}\b(audit|assessment|health ?check|review|audyt)\b'
+pattern = '\b(audit|health ?check|assessment|audyt)\w*\b.{0,20}\b(of )?(power ?bi|bi|reports?|dashboards?|data models?|semantic models?|fabric|tenant|capacity|analytics (estate|platform|stack))\b|\b(power ?bi|bi|fabric|dashboard|data model|semantic model|tenant|capacity)\b.{0,12}\b(audit|health ?check|assessment|audyt)\b'

@@ -64,6 +64,7 @@ class Profile:
         self.pt_americas, self.pt_abroad = rx(pt["americas"]), rx(pt["abroad"])
         self.signals = [(p["name"], p["points"], p["where"], rx(p["pattern"]), p.get("requires", ""))
                         for p in c["parallel"]]
+        self.support_only = {p["name"] for p in c["parallel"] if p.get("alone") is False}
         self._lang_ctx = re.compile(
             r"(fluent|fluency|native|proficien\w+|business[- ]level|c1|c2|required|mandatory|must|speaker)", re.I)
 
@@ -130,7 +131,7 @@ class Profile:
         if not (self.context.search(title) or self.strong.search(text)):
             return None
         hits = self.signals_of(job)
-        if not hits:
+        if not hits or all(h[0] in self.support_only for h in hits):
             return None
         if self.blocked.search(text) or (text and language(text) in self.foreign):
             return None
