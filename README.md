@@ -20,8 +20,10 @@ No AI and no secrets are used. Reading the short list with AI is a separate, opt
 
 | Kind | Sites |
 |---|---|
-| Applicant-tracking sites | Greenhouse, Lever (global and EU), Ashby, Workable, Recruitee, SmartRecruiters, Teamtailor, Personio, Traffit |
-| Job-board feeds | Remotive, Remote OK, Arbeitnow, Himalayas, Jobicy, We Work Remotely |
+| Applicant-tracking sites | Greenhouse, Lever (global and EU), Ashby, Workable, Recruitee, SmartRecruiters, Teamtailor, Personio, Traffit, BambooHR, Breezy, Pinpoint |
+| Corporate career sites | Workday (searched with a few words per company, details read only for likely matches) |
+| Job-board feeds | Remotive, Remote OK, Arbeitnow, Himalayas, Jobicy, We Work Remotely, Hacker News hiring threads |
+| Aggregators (need free keys) | Adzuna (`ADZUNA_APP_ID`, `ADZUNA_APP_KEY`), Jooble (`JOOBLE_KEY`): add them under Settings → Secrets → Actions |
 
 Not covered: LinkedIn (its terms forbid automated collection) and boards without a public feed
 (Just Join IT, No Fluff Jobs, Pracuj.pl).

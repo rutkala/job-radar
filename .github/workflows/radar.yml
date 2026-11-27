@@ -4,6 +4,7 @@ on:
     paths: ["trigger/radar.txt"]   # a push that changes this file starts a run with its settings
   schedule:
     - cron: "17 4 * * *"   # every day, 04:17 UTC
+    - cron: "43 15 * * *"  # and 15:43 UTC (a second chance when GitHub skips a scheduled run)
   workflow_dispatch:
     inputs:
       limit:
@@ -25,6 +26,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Read job lists and write the report
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          JOOBLE_KEY: ${{ secrets.JOOBLE_KEY }}
         run: |
           LIMIT="${{ inputs.limit || '0' }}"; BUDGET="${{ inputs.budget || '30' }}"
           if [ "${{ github.event_name }}" = "push" ]; then read -r LIMIT BUDGET < trigger/radar.txt; fi

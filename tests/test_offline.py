@@ -115,6 +115,49 @@ def test_misc():
     assert o == {"ashby": {"a-co"}}, o
 
 
+def test_new_sources():
+    import radar.feeds as F
+    b = S.bamboohr_parse("acme", json.dumps({"result": [{"id": "12", "jobOpeningName": "BI Analyst",
+        "location": {"city": "Warsaw", "state": None}, "isRemote": True, "employmentStatusLabel": "Part-Time"}]}))
+    assert b[0]["remote"] and b[0]["employment"] == "Part-Time" and "Warsaw" in b[0]["location"], b
+    z = S.breezy_parse("acme", json.dumps([{"id": "x", "name": "Power BI Consultant", "url": "u",
+        "location": {"name": "Poland", "is_remote": True}, "type": {"name": "Contract"}, "published_date": "2026-11-20"}]))
+    assert z[0]["employment"] == "Contract" and z[0]["remote"], z
+    q = S.pinpoint_parse("acme", json.dumps({"data": [{"id": 3, "title": "Head of BI", "url": "u",
+        "location": {"name": "Kraków"}, "workplace_type": "remote", "employment_type_text": "Full-time"}]}))
+    assert q[0]["remote"] and "Kraków" in q[0]["location"], q
+    assert S.slug_ok("workday", "abb/wd3/External") and not S.slug_ok("workday", "abb")
+    assert slug_from("https://abb.wd3.myworkdayjobs.com/en-US/External_Careers/job/Krakow/BI_R1", "workday") == "abb/wd3/External_Careers"
+    assert slug_from("https://abb.wd3.myworkdayjobs.com/wday/cxs/abb/x/jobs", "workday") == ""
+    # Workday fetch with a fake network
+    calls = []
+    def fake(url, data=None, headers=None):
+        calls.append(url)
+        if url.endswith("/jobs"):
+            return json.dumps({"jobPostings": [{"title": "Product Owner BI", "externalPath": "/job/Krakow/PO_R1",
+                                                "locationsText": "Krakow"}, {"title": "Welder", "externalPath": "/job/x/W"}]}).encode()
+        return json.dumps({"jobPostingInfo": {"jobDescription": "<p>" + BI + "</p>", "location": "Krakow, Poland",
+                                              "remoteType": "Flexible / Remote", "startDate": "2026-11-20"}}).encode()
+    js = S.workday_fetch("abb/wd3/External", P, fake)
+    assert len(js) == 1 and js[0]["remote"] and js[0]["url"].endswith("/External/job/Krakow/PO_R1"), js
+    assert P.evaluate(js[0]), js[0]
+    # Hacker News with a fake network
+    def hn(url, **kw):
+        if "search_by_date" in url:
+            return json.dumps({"hits": [{"title": "Ask HN: Who is hiring? (November 2026)", "objectID": "1"}]}).encode()
+        return json.dumps({"created_at": "2026-11-01T00:00:00Z", "children": [
+            {"id": 9, "text": "Acme | Head of Business Intelligence | REMOTE (Europe) | Full-time<p>" + BI}]}).encode()
+    F.get = hn
+    h = F.hackernews()
+    assert h and h[0]["company"] == "Acme" and h[0]["remote"] and P.evaluate(h[0]), h
+    import os
+    os.environ.pop("ADZUNA_APP_ID", None)
+    try:
+        F.adzuna(); raise AssertionError("should skip without keys")
+    except RuntimeError:
+        pass
+
+
 if __name__ == "__main__":
-    test_parsers(); test_matching(); test_parttime(); test_misc()
+    test_parsers(); test_matching(); test_parttime(); test_misc(); test_new_sources()
     print("all offline checks passed")

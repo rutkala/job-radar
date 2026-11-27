@@ -13,7 +13,7 @@ from .match import Profile
 from .text import plain
 
 # Requests in parallel per site (default: --workers). Lower for sites that ask to slow down.
-PACE = {"greenhouse": 4, "workable": 2, "personio": 2, "recruitee": 3}
+PACE = {"greenhouse": 4, "workable": 2, "personio": 2, "recruitee": 3, "workday": 4, "bamboohr": 3}
 TODAY = dt.date.today()
 DAY = TODAY.toordinal()
 
@@ -22,8 +22,10 @@ def load_slugs(site):
     path = f"data/companies/{site}.txt"
     if not os.path.exists(path):
         return []
+    keep_case = site == "workday"
     with open(path, encoding="utf-8") as f:
-        return sorted({l.strip().lower() for l in f if l.strip() and not l.startswith("#")})
+        return sorted({(l.strip() if keep_case else l.strip().lower())
+                       for l in f if l.strip() and not l.startswith("#")})
 
 
 def load_json(path, default):
@@ -52,9 +54,10 @@ def enrich_smartrecruiters(job):
 
 
 def run_site(site, profile, budget_s, workers, limit, stats, found):
-    url_of, parse, headers = sources.SITES[site]
+    url_of, parse, headers = sources.SITES.get(site, (None, None, {}))
+    fetcher = sources.FETCH.get(site)
     state = load_json(f"data/state/{site}.json", {})  # slug -> [last_day, fails]
-    slugs = [s for s in load_slugs(site) if sources.SLUG.match(s)]
+    slugs = [s for s in load_slugs(site) if sources.slug_ok(site, s)]
     # Dead addresses are retried once a month; the rest go oldest-checked first.
     due = [s for s in slugs if state.get(s, [0, 0])[1] < 3 or DAY - state[s][0] >= 30]
     due.sort(key=lambda s: state.get(s, [0, 0])[0])
@@ -75,10 +78,12 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
         if stop.is_set() or time.time() > deadline:
             return slug, None, "skip"
         try:
+            if fetcher:
+                return slug, fetcher(slug, profile, get), ""
             raw = get(url_of(slug), headers=headers)
-            if pace["sample"]:
+            if pace["sample"] and len(raw) > 60:
                 pace["sample"] = False
-                print(f"sample {site}/{slug}: {raw[:1800]!r}", flush=True)
+                print(f"sample {site}/{slug}: {raw[:2500]!r}", flush=True)
             return slug, parse(slug, raw), ""
         except Gone:
             return slug, None, "gone"
@@ -176,7 +181,7 @@ def table(rows):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--sites", default=",".join(sources.SITES))
+    ap.add_argument("--sites", default=",".join(list(sources.SITES) + list(sources.FETCH)))
     ap.add_argument("--feeds", default=",".join(feeds.FEEDS))
     ap.add_argument("--budget-min", type=float, default=30)
     ap.add_argument("--workers", type=int, default=8)

@@ -229,3 +229,113 @@ SITES = {
 }
 
 SLUG = re.compile(r"^[a-z0-9][a-z0-9_\-]{1,59}$", re.I)
+
+
+# ---- BambooHR -------------------------------------------------------------
+def bamboohr_url(slug):
+    return f"https://{slug}.bamboohr.com/careers/list"
+
+
+def bamboohr_parse(slug, raw):
+    out = []
+    for j in json.loads(raw).get("result", []):
+        l = j.get("location") or {}
+        loc = ", ".join(x for x in (l.get("city"), l.get("state"), l.get("country")) if x)
+        remote = bool(j.get("isRemote")) or str(j.get("locationType") or "") == "1"
+        out.append(job("bamboohr", slug, j.get("id"), j.get("jobOpeningName"),
+                       loc + (" (remote)" if remote else ""),
+                       f"https://{slug}.bamboohr.com/careers/{j.get('id')}", "",
+                       f"{j.get('departmentLabel') or ''}", remote=True if remote else None,
+                       employment=j.get("employmentStatusLabel") or ""))
+    return out
+
+
+# ---- Breezy HR ------------------------------------------------------------
+def breezy_url(slug):
+    return f"https://{slug}.breezy.hr/json"
+
+
+def breezy_parse(slug, raw):
+    out = []
+    for j in json.loads(raw):
+        l = j.get("location") or {}
+        loc = l.get("name") or ", ".join(x for x in ((l.get("city") or ""), ((l.get("country") or {}).get("name") or "")) if x)
+        remote = bool(l.get("is_remote"))
+        out.append(job("breezy", slug, j.get("id"), j.get("name"), loc + (" (remote)" if remote else ""),
+                       j.get("url"), j.get("published_date"), j.get("description") or "",
+                       remote=True if remote else None, employment=(j.get("type") or {}).get("name") or ""))
+    return out
+
+
+# ---- Pinpoint -------------------------------------------------------------
+def pinpoint_url(slug):
+    return f"https://{slug}.pinpointhq.com/postings.json"
+
+
+def pinpoint_parse(slug, raw):
+    out = []
+    for j in json.loads(raw).get("data", []):
+        l = j.get("location") or {}
+        wt = str(j.get("workplace_type") or "").lower()
+        loc = l.get("name") or ", ".join(x for x in (l.get("city"), l.get("province")) if x)
+        out.append(job("pinpoint", slug, j.get("id"), j.get("title"), loc + (f" ({wt})" if wt else ""),
+                       j.get("url"), "", (j.get("description") or "") + " " + (j.get("key_responsibilities") or ""),
+                       remote=True if wt == "remote" else None, employment=j.get("employment_type_text") or ""))
+    return out
+
+
+SITES.update({
+    "bamboohr": (bamboohr_url, bamboohr_parse, {}),
+    "breezy": (breezy_url, breezy_parse, {}),
+    "pinpoint": (pinpoint_url, pinpoint_parse, {}),
+})
+
+
+# ---- Workday (search, then details for likely matches) ---------------------
+# Company entries look like "tenant/wd3/SiteName" (the site name is case-sensitive).
+WORKDAY = re.compile(r"^[a-z0-9][a-z0-9_\-]{0,60}/wd\d{1,3}/[A-Za-z0-9_\-]{1,80}$")
+WORKDAY_SEARCHES = ["analytics", "business intelligence", "power bi", "product owner", "reporting"]
+
+
+def slug_ok(site, slug):
+    return bool(WORKDAY.match(slug)) if site == "workday" else bool(SLUG.match(slug))
+
+
+def workday_fetch(slug, profile, get):
+    """Search the company's Workday site with a few words, then read details of jobs whose
+    title fits a role. Returns parsed jobs (only those worth evaluating)."""
+    tenant, wd, site = slug.split("/")
+    base = f"https://{tenant}.{wd}.myworkdayjobs.com"
+    api = f"{base}/wday/cxs/{tenant}/{site}"
+    seen, out = set(), []
+    for word in WORKDAY_SEARCHES:
+        body = json.dumps({"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word}).encode()
+        data = json.loads(get(f"{api}/jobs", data=body,
+                              headers={"Content-Type": "application/json", "Accept": "application/json"}))
+        for p in data.get("jobPostings") or []:
+            path = p.get("externalPath") or ""
+            title = p.get("title") or ""
+            if not path or path in seen:
+                continue
+            seen.add(path)
+            if not (profile.role_of(title) or profile.pt_field.search(title)):
+                continue
+            text, loc, remote, posted = "", p.get("locationsText") or "", None, ""
+            try:
+                info = json.loads(get(f"{api}{path}", headers={"Accept": "application/json"})).get("jobPostingInfo") or {}
+                text = info.get("jobDescription") or ""
+                locs = [info.get("location") or ""] + list(info.get("additionalLocations") or [])
+                loc = ", ".join(x for x in locs if x) or loc
+                rt = str(info.get("remoteType") or "")
+                if "remote" in rt.lower():
+                    remote, loc = True, f"{loc} ({rt})"
+                posted = info.get("startDate") or ""
+            except Exception:
+                pass
+            out.append(job("workday", tenant, path.rsplit("/", 1)[-1], title, loc,
+                           f"{base}/{site}{path}", posted, text, remote=remote,
+                           employment=p.get("timeType") or ""))
+    return out
+
+
+FETCH = {"workday": workday_fetch}

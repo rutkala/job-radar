@@ -14,7 +14,7 @@ import time
 from urllib.parse import parse_qs, quote, urlparse
 
 from .http import Throttled, get
-from .sources import SLUG
+from .sources import SLUG, WORKDAY
 
 # site -> list of (pattern, kind). kind "path": company is the first path part;
 # "sub": company is the subdomain.
@@ -30,7 +30,12 @@ PATTERNS = {
     "teamtailor": [("teamtailor.com", "sub")],
     "personio": [("jobs.personio.de", "sub"), ("jobs.personio.com", "sub")],
     "traffit": [("traffit.com", "sub")],
+    "bamboohr": [("bamboohr.com", "sub")],
+    "breezy": [("breezy.hr", "sub")],
+    "pinpoint": [("pinpointhq.com", "sub")],
+    "workday": [("myworkdayjobs.com", "workday")],
 }
+_LOCALE = re.compile(r"^[a-z]{2}(-[A-Za-z]{2})?$")
 RESERVED = set("""www api app apps jobs job careers career embed static assets help support blog docs cdn
 status auth login signup robots.txt sitemap.xml favicon.ico js css images img v0 v1 public en de pl fr
 o j api-docs widget oauth sso admin mail email go info about legal privacy terms search company companies
@@ -39,6 +44,17 @@ integrations partners pricing resources developers developer hire hiring talent"
 
 def slug_from(url, kind):
     u = urlparse(url if "://" in url else "http://" + url)
+    if kind == "workday":
+        host = (u.hostname or "").lower().split(".")
+        if len(host) < 4 or not re.match(r"^wd\d{1,3}$", host[1]):
+            return ""
+        parts = [p for p in u.path.split("/") if p]
+        if parts and _LOCALE.match(parts[0]):
+            parts = parts[1:]
+        if not parts or parts[0].lower() in ("wday", "job", "jobs", "login", "en-us"):
+            return ""
+        s = f"{host[0]}/{host[1]}/{parts[0]}"
+        return s if WORKDAY.match(s) else ""
     if kind == "sub":
         s = (u.hostname or "").split(".")[0]
     else:
@@ -98,7 +114,7 @@ def directories():
 
 def wayback(pattern, kind, limit=150000):
     """The Internet Archive's index of addresses it has seen: a second, larger archive."""
-    target = f"*.{pattern}" if kind == "sub" else pattern
+    target = f"*.{pattern}" if kind in ("sub", "workday") else pattern
     url = (f"https://web.archive.org/cdx/search/cdx?url={quote(target, safe='*')}"
            f"&fl=original&collapse=urlkey&from=2025&limit={limit}")
     try:
@@ -122,7 +138,7 @@ def cc_get(url):
 
 def harvest(api, pattern, kind, max_pages, deadline=float("inf")):
     q = f"{api}?url={quote(pattern, safe='*')}&output=json&fl=url"
-    if kind == "sub":
+    if kind in ("sub", "workday"):
         q += "&matchType=domain"
     try:
         total = json.loads(cc_get(q + "&showNumPages=true")).get("pages", 0)
@@ -173,7 +189,8 @@ def main():
         known = set()
         if os.path.exists(path):
             with open(path, encoding="utf-8") as f:
-                known = {l.strip().lower() for l in f if l.strip() and not l.startswith("#")}
+                known = {(l.strip() if site == "workday" else l.strip().lower())
+                         for l in f if l.strip() and not l.startswith("#")}
         before = len(known)
         known |= ready.get(site, set())
         for pattern, kind in PATTERNS[site]:

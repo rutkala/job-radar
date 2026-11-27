@@ -24,8 +24,9 @@ jobs:
       - name: Find companies on each applicant-tracking site
         run: |
           PAGES="${{ inputs.max_pages || '25' }}"
-          if [ "${{ github.event_name }}" = "push" ]; then read -r PAGES < trigger/discover.txt; fi
-          python -m radar.discover --max-pages "$PAGES"
+          SITES=""
+          if [ "${{ github.event_name }}" = "push" ]; then read -r PAGES SITES < trigger/discover.txt; fi
+          python -m radar.discover --max-pages "$PAGES" ${SITES:+--sites "$SITES"}
       - name: Save the company lists
         if: always()
         run: |
