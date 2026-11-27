@@ -118,7 +118,9 @@ def hackernews():
 # ---- Adzuna (needs free keys: ADZUNA_APP_ID, ADZUNA_APP_KEY) -----------------
 ADZUNA_COUNTRIES = ["pl", "gb", "nl", "de", "at", "ch", "fr", "it", "es", "be"]
 SEARCH_WORDS = ["power bi", "business intelligence", "microsoft fabric", "bi product owner",
-                "analytics consultant", "people analytics", "ai adoption"]
+                "analytics consultant", "people analytics", "ai adoption",
+                "power bi contract", "power bi freelance", "power bi part time", "fractional analytics",
+                "power bi audit"]
 
 
 def adzuna():
@@ -166,3 +168,34 @@ def jooble():
 
 
 FEEDS.update({"hackernews": hackernews, "adzuna": adzuna, "jooble": jooble})
+
+
+# ---- Freelancer.com: public list of open projects (short jobs, audits) ---------
+FREELANCER_WORDS = ["power bi", "microsoft fabric", "power bi audit", "dax", "power bi consultant"]
+
+
+def freelancer():
+    out, seen = [], set()
+    for word in FREELANCER_WORDS:
+        q = urllib.parse.urlencode({"query": word, "limit": 50, "full_description": "true",
+                                    "job_details": "true", "sort_field": "time_updated"})
+        data = json.loads(get(f"https://www.freelancer.com/api/projects/0.1/projects/active/?{q}"))
+        for p in (data.get("result") or {}).get("projects", []):
+            if p.get("id") in seen:
+                continue
+            seen.add(p.get("id"))
+            budget = p.get("budget") or {}
+            cur = (p.get("currency") or {}).get("code", "")
+            top = budget.get("maximum") or budget.get("minimum") or 0
+            rate = (p.get("currency") or {}).get("exchange_rate") or 1   # to USD
+            if top * rate < 400:          # skip tiny gigs
+                continue
+            kind = "hourly" if p.get("type") == "hourly" else "fixed price"
+            text = f"{p.get('description') or ''} Budget: {budget.get('minimum')}-{budget.get('maximum')} {cur} ({kind}). Freelance project."
+            out.append(job("freelancer", "Freelancer.com client", p.get("id"), p.get("title"),
+                           "Worldwide (remote)", f"https://www.freelancer.com/projects/{p.get('seo_url')}",
+                           "", text, remote=True, employment="freelance"))
+    return out
+
+
+FEEDS["freelancer"] = freelancer

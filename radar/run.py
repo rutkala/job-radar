@@ -137,7 +137,7 @@ def fresh(job, profile):
 
 
 def both(profile, j):
-    """The role match and/or the part-time match for a job (0, 1 or 2 results)."""
+    """The role match and/or the parallel-work match for a job (0, 1 or 2 results)."""
     if not fresh(j, profile) or j["company"].lower() in profile.skip_companies:
         return []
     out = []
@@ -236,11 +236,11 @@ def main():
     show = lambda rows, empty: table(rows) if rows else empty
     lines = [f"# Job radar, {TODAY.isoformat()}", "",
              f"**Roles: {len(new_rows)} new, {len(open_rows)} still open. "
-             f"Part-time and freelance: {len(pt_new)} new, {len(pt_open)} still open.**", "",
+             f"Parallel work: {len(pt_new)} new, {len(pt_open)} still open.**", "",
              "## Roles: new today", "", show(new_rows, "Nothing new today."), "",
-             "## Part-time and freelance: new today", "", show(pt_new, "Nothing new today."), "",
+             "## Parallel work (alongside the current contract): new today", "", show(pt_new, "Nothing new today."), "",
              "## Roles: still open", "", show(open_rows, "None."), "",
-             "## Part-time and freelance: still open", "", show(pt_open, "None."), "",
+             "## Parallel work: still open", "", show(pt_open, "None."), "",
              "## What was read", "",
              "| Source | Companies known | Checked today | Jobs read | Matches | Gone | Errors | Note |",
              "|---|---|---|---|---|---|---|---|"]
@@ -253,7 +253,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(report)
     total = sum(s["jobs"] for s in stats.values())
-    print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)} roles, {len(pt_new)} part-time")
+    print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)} roles, {len(pt_new)} parallel")
     for name, s in sorted(stats.items()):
         print(name, s)
 

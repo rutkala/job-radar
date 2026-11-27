@@ -60,8 +60,10 @@ class Profile:
         self.blocked = rx(M["blocked"])
         pt = c["parttime"]
         self.pt_base = pt["base"]
-        self.pt_field, self.pt_title = rx(pt["field"]), rx(pt["title_signal"])
-        self.pt_text, self.pt_exclude = rx(pt["text_signal"]), rx(pt["exclude"])
+        self.pt_field, self.pt_exclude = rx(pt["field"]), rx(pt["exclude"])
+        self.pt_americas, self.pt_abroad = rx(pt["americas"]), rx(pt["abroad"])
+        self.signals = [(p["name"], p["points"], p["where"], rx(p["pattern"]), p.get("requires", ""))
+                        for p in c["parallel"]]
         self._lang_ctx = re.compile(
             r"(fluent|fluency|native|proficien\w+|business[- ]level|c1|c2|required|mandatory|must|speaker)", re.I)
 
@@ -100,31 +102,56 @@ class Profile:
             return None
         return None  # a named place outside Poland, or remote tied to another country
 
+    def signals_of(self, job):
+        """Parallel-work signals found in a job: list of (name, points, matched text)."""
+        head = f"{job['title']} | {job.get('employment', '')}"
+        text = job["text"]
+        hits = []
+        for name, pts, where, pat, _ in self.signals:
+            m = (where in ("title", "both") and pat.search(head)) or \
+                (where in ("text", "both") and pat.search(text))
+            if m:
+                hits.append((name, pts, m.group(0)))
+        names = {h[0] for h in hits}
+        keep = []
+        reqs = {n: r for n, _, _, _, r in self.signals}
+        for h in hits:
+            r = reqs.get(h[0])
+            if r and not any(n.startswith(r) for n in names if n != h[0]):
+                continue
+            keep.append(h)
+        return keep
+
     def parttime(self, job):
-        """Part-time, freelance or contract work in the field. Return a match dict, or None."""
+        """Work that can run in parallel to the current contract. Return a match dict, or None."""
         title, text = job["title"], job["text"]
         if self.pt_exclude.search(title) or not self.pt_field.search(title):
             return None
         if not (self.context.search(title) or self.strong.search(text)):
             return None
-        strong = self.pt_title.search(f"{title} | {job.get('employment', '')}")
-        weak = self.pt_text.search(text)
-        if not (strong or weak):
+        hits = self.signals_of(job)
+        if not hits:
             return None
         if self.blocked.search(text) or (text and language(text) in self.foreign):
             return None
         where = self.place(job)
+        names = {h[0] for h in hits}
+        if not where and "other timezone (late-afternoon work)" in names:
+            loc = job["location"]
+            remote = job.get("remote") or self.remote.search(f"{loc} {title}")
+            if remote and self.pt_americas.search(loc) and self.pt_abroad.search(text):
+                where = (self.pts["unclear"], "Remote, other timezone, open to people abroad")
         if not where:
             return None
-        score = self.pt_base + where[0] + (15 if strong else 0)
+        best = max(hits, key=lambda h: h[1])
+        score = self.pt_base + where[0] + best[1] + min(5 * (len(hits) - 1), 10)
         why, extra = [], 0
         for n, pts, pat in self.bonus:
             if pat.search(title) or pat.search(text):
                 extra += pts
                 why.append(n)
         score += min(extra, 30)
-        signal = (strong or weak).group(0).lower()
-        flags = [f"signal: {signal}" + ("" if strong else " (in the text only)")]
+        flags = ["; ".join(f"{n}: \"{m.strip()[:40].lower()}\"" for n, _, m in hits)]
         for m in self.req_lang.finditer(text):
             if self._lang_ctx.search(text[max(0, m.start() - 60): m.end() + 60]):
                 flags.append(f"may require {m.group(0).title()}")
@@ -132,7 +159,8 @@ class Profile:
                 break
         if score < self.min_score:
             return None
-        return {"score": score, "role": "Part-time / freelance", "where": where[1], "why": why,
+        kind = ", ".join(sorted(names - {"freelance / contract (in text)"} or names))
+        return {"score": score, "role": f"Parallel: {kind}", "where": where[1], "why": why,
                 "flags": flags, "list": "parttime"}
 
     def evaluate(self, job):

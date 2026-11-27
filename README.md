@@ -45,3 +45,11 @@ Not covered: LinkedIn (its terms forbid automated collection) and boards without
 - The location rule is strict on purpose: a job tied to another country is dropped, even if remote.
 - Access is polite: one identified client, a few requests at a time, and a source is left alone for
   the rest of the run when it asks to slow down.
+
+## Second list: parallel work
+
+Besides full roles, the report has a list of work that can run alongside a current contract:
+part-time, freelance with flexible hours, other-timezone work (US hours, only when the posting is
+open to people abroad), fractional or interim, short-term contracts up to 12 months, jobs of up to a
+month, and audits or assessments. The signals live in `profile.toml` under `[[parallel]]`; each match
+shows which signals were found and the words that triggered them.

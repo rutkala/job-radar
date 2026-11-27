@@ -110,14 +110,72 @@ required_language = '\b(german|deutsch|french|dutch|spanish|italian|swedish|dani
 # Postings with these phrases are dropped: they are closed to someone based in Poland.
 blocked = '\bauthori[sz]ed to work in the (u\.?s\.?|united states)|\bu\.?s\.? citizen|\bsecurity clearance\b|\bmust (reside|be located|be based|live) in the (u\.?s\.?|united states|uk|united kingdom|canada|australia)\b'
 
-# --- Second list: part-time, freelance and contract work in the field ---------
-# A job lands here when its title is in the field AND it shows a part-time or freelance signal.
+# --- Second list: work that can run in parallel to the current contract ---------
+# A job lands here when its title is in the field AND at least one "parallel" signal below fits.
 # Hands-on roles are welcome here (additional projects); junior and student jobs are not.
 [parttime]
 base = 30
-field = '\b(power ?bi|bi|business intelligence|analytics|analyst|analityk\w*|reporting|dashboards?|fabric|tableau|insights|data (consultant|architect|modell?er|visuali[sz]ation|product|strategist))\b'
-# Strong signal: in the title or in the site's employment type (+15 points).
-title_signal = '\b(part[- ]?time|freelance\w*|fractional|interim|contract(or)?|temporary|niepe[lł]ny etat|zlecenie)\b'
-# Weaker signal: in the description.
-text_signal = '\bpart[- ]time\b|\bfreelance\w*|\bfractional\b|\b(1[0-9]|2[0-5]) ?(h|hrs|hours)\b.{0,15}\bweek|\b0[.,][2-6] ?fte\b|\bhourly rate\b|\bniepe[lł]n\w+ etat\w*'
+field = '\b(power ?bi|bi|business intelligence|analytics|analyst|analityk\w*|reporting|dashboards?|fabric|tableau|insights|data (consultant|architect|modell?er|visuali[sz]ation|product|strategist|governance|lead)|ai (adoption|enablement)|copilot)\b'
 exclude = '\b(intern|internship|junior|trainee|werkstudent|praktik\w*|student|graduate|apprentice|sta[zż]\w*)\b'
+# Jobs located in the US/Americas count only with a timezone signal AND text that opens them
+# to people abroad (most US jobs need US work authorisation).
+americas = '\b(us|usa|united states|u\.s\.|americas?|north america|canada|latam|est|pst|[a-z ]+, (ca|ny|tx|wa|ma|il|fl|co|ga|nc|va))\b'
+abroad = '\b(anywhere|worldwide|international (contractors?|candidates)|outside (the )?(us|united states)|contractors? (from|in) any|globally|any country|independent contractor)\b'
+
+# Each signal: name, points, where it is looked for ("title" = title or the site's employment
+# type, "text" = description, "both"), pattern. The best signal sets the points; all are listed.
+# requires = another signal that must also be present (e.g. flexible hours only for freelancers).
+[[parallel]]
+name = "part-time"
+points = 15
+where = "both"
+pattern = '\bpart[- ]?time\b|\bniepe[lł]n\w* etat\w*|\b0[.,][1-6] ?fte\b|\b(5|[1-2][0-9]|30) ?(h|hrs|hours|godzin)\w*\b.{0,20}\b(week|weekly|tydzie\w*|tygodniowo)\b'
+
+[[parallel]]
+name = "freelance / contract"
+points = 12
+where = "title"
+pattern = '\b(freelance\w*|contract(or)?|b2b|zlecenie|self-employed|1099)\b'
+
+[[parallel]]
+name = "freelance / contract (in text)"
+points = 6
+where = "text"
+pattern = '\b(freelance\w*|independent contractor|contract role|b2b contract|umowa b2b|hourly rate|day rate|stawka godzinowa)\b'
+
+[[parallel]]
+name = "flexible hours"
+points = 10
+where = "text"
+pattern = '\b(flexible (working )?(hours|schedule)|set your own (hours|schedule)|choose your (own )?hours|work (on|at) your own (pace|schedule)|fully async\w*|asynchronous(ly)?)\b'
+requires = "freelance"
+
+[[parallel]]
+name = "other timezone (late-afternoon work)"
+points = 12
+where = "text"
+pattern = '\b(us|u\.s\.|north american?|americas|pacific|eastern|central|apac|australian?) (time ?zones?|business hours|hours)\b|\boverlap\w* (with|of) .{0,30}\b(est|edt|pst|pdt|cst|et|pt|us|americas)\b|\b\d{1,2}(:\d\d)? ?(am|pm)? ?[-–] ?\d{1,2}(:\d\d)? ?(am|pm)? ?(est|edt|pst|pdt|cst|cdt|et|pt)\b'
+
+[[parallel]]
+name = "fractional / interim"
+points = 15
+where = "both"
+pattern = '\b(fractional|interim)\b'
+
+[[parallel]]
+name = "short-term (up to 12 months)"
+points = 12
+where = "both"
+pattern = '\b([1-9]|1[0-2])[- ]?(months?|mo|miesi\w+)\b.{0,15}\b(contract|project|engagement|assignment|kontrakt|projekt)\b|\b(contract|project|engagement|assignment) (length|duration|term)\W{1,5}([1-9]|1[0-2]) ?(months?|mo)\b|\b(temporary|temp|fixed[- ]term|maternity cover|parental leave cover|zast[eę]pstw\w*)\b'
+
+[[parallel]]
+name = "short job (up to a month)"
+points = 15
+where = "both"
+pattern = '\b([1-4]|one|two|three|four)[- ]?(weeks?|tygodni\w*)\b.{0,20}\b(project|engagement|contract|gig|assignment|projekt)\b|\b(short[- ]term|one[- ]off|ad[- ]hoc) (project|engagement|gig|assignment|task)\b'
+
+[[parallel]]
+name = "audit / assessment"
+points = 15
+where = "both"
+pattern = '\b(audit|assessment|health ?check|review|optimi[sz]ation|audyt)\b.{0,25}\b(power ?bi|bi|reports?|dashboards?|data models?|semantic models?|fabric|tenant|capacity|analytics)\b|\b(power ?bi|bi|fabric|dashboard|data model|semantic model|tenant|capacity)\b.{0,15}\b(audit|assessment|health ?check|review|audyt)\b'

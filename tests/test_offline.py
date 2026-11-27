@@ -91,13 +91,23 @@ def test_parttime():
     a = pt(J("Power BI Developer (Part-time)", "Remote - Europe", BI))
     assert a and a["list"] == "parttime" and "part-time" in a["flags"][0], a
     b = pt(J("BI Analyst", "Remote, Poland", BI + " This is a part-time role, 20 hours per week."))
-    assert b and "in the text only" in b["flags"][0] and a["score"] > b["score"], (a, b)
+    assert b and "part-time" in b["role"], b
     c = job("t", "acme", "2", "Data Analyst, Reporting", "Poland (remote)", "u", "", BI, None, "Contract")
     assert pt(c), c
     assert pt(J("Freelance Power BI Consultant", "Remote - United States", BI)) is None
     assert pt(J("Working Student Power BI (part-time)", "Remote - Europe", BI)) is None
     assert pt(J("BI Analyst", "Remote, Poland", BI)) is None            # full-time, no signal
     assert pt(J("Part-time Barista", "Warsaw (remote)", "coffee")) is None
+    # the other kinds of parallel work
+    assert "short-term" in pt(J("Power BI Consultant", "Remote - Poland", BI + " 6-month contract."))["role"]
+    assert "fractional" in pt(J("Fractional Head of Analytics", "Remote (EU)", BI))["role"]
+    au = pt(J("Power BI Audit", "Remote - Europe", BI + " A 2-week project to review our tenant."))
+    assert "audit" in au["role"] and "up to a month" in au["role"], au
+    assert pt(J("BI Analyst", "Remote, Poland", BI + " Flexible working hours.")) is None   # perk only
+    assert pt(J("BI Analyst", "Remote, Poland", BI + " Freelance, flexible hours.")) is not None
+    us = BI + " Independent contractor, anywhere. Overlap with EST hours."
+    assert pt(J("Power BI Developer", "Remote, USA", us))["where"].startswith("Remote, other timezone")
+    assert pt(J("Power BI Developer", "Remote, USA", BI + " Overlap with EST hours.")) is None
 
 
 def test_misc():
