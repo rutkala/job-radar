@@ -39,6 +39,9 @@ class Profile:
         with open(path, "rb") as f:
             c = tomllib.load(f)
         rx = lambda p: re.compile(p, re.I)
+        self.name = c.get("name", "main")
+        self.label = c.get("label", "")
+        self.search_words = c.get("search_words", [])
         self.min_score = c["min_score"]
         self.keep_days = c["keep_days"]
         self.max_age_days = c.get("max_age_days", 120)
@@ -58,15 +61,23 @@ class Profile:
         self.lang_penalty = M["language_penalty"]
         self.req_lang = rx(M["required_language"])
         self.blocked = rx(M["blocked"])
-        pt = c["parttime"]
+        pt = c.get("parttime")
+        never = r"(?!x)x"
+        self.has_parallel = bool(pt)
+        pt = pt or {"base": 0, "field": never, "exclude": never}
         self.pt_base = pt["base"]
         self.pt_field, self.pt_exclude = rx(pt["field"]), rx(pt["exclude"])
-        self.pt_americas, self.pt_abroad = rx(pt["americas"]), rx(pt["abroad"])
+        self.pt_americas, self.pt_abroad = rx(pt.get("americas", never)), rx(pt.get("abroad", never))
         self.signals = [(p["name"], p["points"], p["where"], rx(p["pattern"]), p.get("requires", ""))
-                        for p in c["parallel"]]
+                        for p in c.get("parallel", [])]
         self.support_only = {p["name"] for p in c["parallel"] if p.get("alone") is False}
         self._lang_ctx = re.compile(
             r"(fluent|fluency|native|proficien\w+|business[- ]level|c1|c2|required|mandatory|must|speaker)", re.I)
+
+    def wants(self, title):
+        """True when a title is worth reading in full for either list."""
+        return bool(self.role_of(title)) or bool(
+            self.has_parallel and self.pt_field.search(title) and not self.pt_exclude.search(title))
 
     def role_of(self, title):
         """Best role whose title pattern matches, ignoring context. None if excluded."""
@@ -126,6 +137,8 @@ class Profile:
     def parttime(self, job):
         """Work that can run in parallel to the current contract. Return a match dict, or None."""
         title, text = job["title"], job["text"]
+        if not self.has_parallel:
+            return None
         if self.pt_exclude.search(title) or not self.pt_field.search(title):
             return None
         if not (self.context.search(title) or self.strong.search(text)):
@@ -203,3 +216,25 @@ class Profile:
         if score < self.min_score:
             return None
         return {"score": score, "role": name, "where": where[1], "why": why, "flags": flags}
+
+
+class Group:
+    """The main profile plus any extra ones in profiles/*.toml, evaluated in one pass over the jobs."""
+
+    def __init__(self, main="profile.toml", extra_dir="profiles"):
+        import glob
+        self.main = Profile(main)
+        self.extra = [Profile(p) for p in sorted(glob.glob(f"{extra_dir}/*.toml"))]
+        self.all = [self.main] + self.extra
+        self.max_age_days = self.main.max_age_days
+        self.keep_days = self.main.keep_days
+        words = []
+        for p in self.all:
+            words += [w for w in p.search_words if w not in words]
+        self.search_words = words
+
+    def role_of(self, title):
+        return any(p.role_of(title) for p in self.all)
+
+    def wants(self, title):
+        return any(p.wants(title) for p in self.all)

@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from . import feeds, sources
 from .http import Gone, Refused, Throttled, get
-from .match import Profile
+from .match import Group
 from .text import plain
 
 # Requests in parallel per site (default: --workers). Lower for sites that ask to slow down.
@@ -136,18 +136,26 @@ def fresh(job, profile):
     return age <= profile.max_age_days
 
 
-def both(profile, j):
-    """The role match and/or the parallel-work match for a job (0, 1 or 2 results)."""
-    if not fresh(j, profile) or j["company"].lower() in profile.skip_companies:
-        return []
+def list_names(p, main):
+    """Keys of a profile's two lists in matches.json."""
+    return ("roles", "parttime") if main else (p.name, f"{p.name}:parttime")
+
+
+def both(group, j):
+    """Role and parallel-work matches for a job, for every profile in the group."""
     out = []
-    m = profile.evaluate(j)
-    if m:
-        m["list"] = "roles"
-        out.append(m)
-    p = profile.parttime(j)
-    if p:
-        out.append(p)
+    for p in group.all:
+        if not fresh(j, p) or j["company"].lower() in p.skip_companies:
+            continue
+        roles, parallel = list_names(p, p is group.main)
+        m = p.evaluate(j)
+        if m:
+            m["list"] = roles
+            out.append(m)
+        q = p.parttime(j)
+        if q:
+            q["list"] = parallel
+            out.append(q)
     return out
 
 
@@ -188,7 +196,7 @@ def main():
     ap.add_argument("--limit", type=int, default=0, help="companies per site (0 = all due)")
     a = ap.parse_args()
 
-    profile = Profile()
+    profile = Group()
     stats, found = {}, []
     threads = []
     for site in [s for s in a.sites.split(",") if s]:
@@ -205,7 +213,7 @@ def main():
     matches = load_json("data/matches.json", {})
     new_ids = []
     for j, m in found:
-        key = (j["url"] or j["id"]) + ("#parttime" if m["list"] == "parttime" else "")
+        key = (j["url"] or j["id"]) + ("" if m["list"] == "roles" else "#" + m["list"])
         rec = matches.get(key)
         if not rec:
             new_ids.append(key)
@@ -252,6 +260,23 @@ def main():
     for path in ("reports/latest.md", f"reports/{TODAY.isoformat()}.md"):
         with open(path, "w", encoding="utf-8") as f:
             f.write(report)
+    for p in profile.extra:
+        roles, parallel = list_names(p, False)
+        r_new, r_open = pick(roles, True), pick(roles, False)
+        p_new, p_open = pick(parallel, True), pick(parallel, False)
+        out = [f"# {p.label or p.name}: job radar, {TODAY.isoformat()}", "",
+               f"**Matches: {len(r_new)} new, {len(r_open)} still open."
+               + (f" Part-time / temporary: {len(p_new)} new, {len(p_open)} still open." if p.has_parallel else "")
+               + f" Jobs read today: {sum(s['jobs'] for s in stats.values())}.**", "",
+               "## New today", "", show(r_new, "Nothing new today."), "",
+               "## Still open", "", show(r_open, "None."), ""]
+        if p.has_parallel:
+            out += ["## Part-time / temporary: new today", "", show(p_new, "Nothing new today."), "",
+                    "## Part-time / temporary: still open", "", show(p_open, "None."), ""]
+        os.makedirs(f"reports/{p.name}", exist_ok=True)
+        for path in (f"reports/{p.name}/latest.md", f"reports/{p.name}/{TODAY.isoformat()}.md"):
+            with open(path, "w", encoding="utf-8") as f:
+                f.write("\n".join(out) + "\n")
     total = sum(s["jobs"] for s in stats.values())
     print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)} roles, {len(pt_new)} parallel")
     for name, s in sorted(stats.items()):

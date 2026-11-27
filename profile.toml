@@ -1,6 +1,8 @@
 # What the radar looks for. Edit this file to change the search; no code changes needed.
 # All patterns are regular expressions, matched without regard to upper/lower case.
 
+name = "main"
+search_words = ["analytics", "business intelligence", "power bi", "product owner", "reporting"]
 min_score = 45          # a job needs at least this score to be reported
 keep_days = 14          # how long a match stays in the "still open" list
 # Boards that only repost other companies' jobs (the same job many times):

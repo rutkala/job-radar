@@ -308,7 +308,7 @@ def workday_fetch(slug, profile, get):
     base = f"https://{tenant}.{wd}.myworkdayjobs.com"
     api = f"{base}/wday/cxs/{tenant}/{site}"
     seen, out = set(), []
-    for word in WORKDAY_SEARCHES:
+    for word in getattr(profile, "search_words", None) or WORKDAY_SEARCHES:
         body = json.dumps({"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word}).encode()
         data = json.loads(get(f"{api}/jobs", data=body,
                               headers={"Content-Type": "application/json", "Accept": "application/json"}))
@@ -318,7 +318,7 @@ def workday_fetch(slug, profile, get):
             if not path or path in seen:
                 continue
             seen.add(path)
-            if not (profile.role_of(title) or profile.pt_field.search(title)):
+            if not profile.wants(title):
                 continue
             text, loc, remote, posted = "", p.get("locationsText") or "", None, ""
             try:
