@@ -53,3 +53,34 @@ part-time, freelance with flexible hours, other-timezone work (US hours, only wh
 open to people abroad), fractional or interim, short-term contracts up to 12 months, jobs of up to a
 month, and audits or assessments. The signals live in `profile.toml` under `[[parallel]]`; each match
 shows which signals were found and the words that triggered them.
+
+## Job lake: every job, stored once, then daily changes
+
+Besides the matches, each run records **every job it reads** in a Cloudflare R2 bucket
+(default name `job-radar`). The first run writes all jobs (the initial load); after that only
+new, changed and closed jobs are written.
+
+```
+changes/date=YYYY-MM-DD/run-HHMM-NNN.jsonl.gz   one JSON line per event: new / changed / closed
+state/jobs.json.gz                              fingerprint, first seen, last seen of every open job
+```
+
+A job is closed only when its company was read successfully in that run and the job was gone,
+so companies skipped for time do not close anything. Feeds that show only their latest jobs
+never close jobs.
+
+Setup: create the bucket in Cloudflare R2, create an R2 API token with Object Read & Write for
+that bucket, and add three repository secrets: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`,
+`R2_SECRET_ACCESS_KEY` (optional variable `R2_BUCKET` for another bucket name).
+Without them the lake is skipped and the radar works as before.
+
+Reading it with DuckDB (current open jobs = the latest event per job, unless closed):
+
+```sql
+INSTALL httpfs; LOAD httpfs;
+CREATE SECRET r2 (TYPE r2, KEY_ID '...', SECRET '...', ACCOUNT_ID '...');
+CREATE VIEW events AS SELECT * FROM read_json_auto('r2://job-radar/changes/*/*.jsonl.gz', hive_partitioning = true);
+CREATE VIEW open_jobs AS
+  SELECT * FROM events QUALIFY row_number() OVER (PARTITION BY key ORDER BY seen DESC) = 1 AND event <> 'closed';
+SELECT source, count(*) FROM open_jobs GROUP BY 1 ORDER BY 2 DESC;
+```

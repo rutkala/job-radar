@@ -10,6 +10,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from . import feeds, sources
 from .http import Gone, Refused, Throttled, get
 from .match import Group
+from .lake import Lake
+
+LAKE = None   # set in main(); every job read is recorded there
 from .text import plain
 
 # Requests in parallel per site (default: --workers). Lower for sites that ask to slow down.
@@ -120,6 +123,8 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
                 for m in both(profile, j):
                     st["matches"] += 1
                     found.append((j, m))
+            if LAKE:
+                LAKE.add(site, slug, jobs)
     if pace["throttles"] and not st["stopped"]:
         st["stopped"] = f"slowed down {pace['throttles']} times"
     if time.time() > deadline and not st["stopped"]:
@@ -172,6 +177,8 @@ def run_feed(name, profile, stats, found):
         for m in both(profile, j):
             st["matches"] += 1
             found.append((j, m))
+    if LAKE:
+        LAKE.add(name, name, jobs, closable=False)
 
 
 def cell(s):
@@ -194,7 +201,20 @@ def main():
     ap.add_argument("--budget-min", type=float, default=30)
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--limit", type=int, default=0, help="companies per site (0 = all due)")
+    ap.add_argument("--no-lake", action="store_true", help="do not record all jobs in the job lake")
+    ap.add_argument("--lake-local", action="store_true", help="job lake in the folder lake/ when no R2 keys are set")
     a = ap.parse_args()
+
+    global LAKE
+    if not a.no_lake:
+        try:
+            from .lake import Store
+            if Store().remote or a.lake_local:
+                LAKE = Lake()
+            else:
+                print("job lake skipped: no R2 keys (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY)")
+        except Exception as e:
+            print(f"job lake disabled: {type(e).__name__}: {e}")
 
     profile = Group()
     stats, found = {}, []
@@ -277,6 +297,11 @@ def main():
         for path in (f"reports/{p.name}/latest.md", f"reports/{p.name}/{TODAY.isoformat()}.md"):
             with open(path, "w", encoding="utf-8") as f:
                 f.write("\n".join(out) + "\n")
+    if LAKE:
+        lake_line = LAKE.finish()
+        print(lake_line)
+        with open("reports/latest.md", "a", encoding="utf-8") as f:
+            f.write("\n" + lake_line + "\n")
     total = sum(s["jobs"] for s in stats.values())
     print(f"jobs read: {total}; matches: {len(found)}; new: {len(new_rows)} roles, {len(pt_new)} parallel")
     for name, s in sorted(stats.items()):

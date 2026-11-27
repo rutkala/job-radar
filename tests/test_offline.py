@@ -112,6 +112,43 @@ def test_parttime():
     assert pt(J("Power BI Developer", "Remote, USA", BI + " Overlap with EST hours.")) is None
 
 
+def test_lake():
+    import gzip, json, os, shutil, tempfile, datetime as dt
+    from radar.lake import Lake, Store
+    for k in ("R2_ACCOUNT_ID", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"):
+        os.environ.pop(k, None)
+    d = tempfile.mkdtemp()
+    try:
+        t1 = dt.datetime(2026, 11, 27, 4, 17, tzinfo=dt.timezone.utc)
+        a, b, c = (J(f"Job {i}", "Remote", "text") for i in "abc")
+        for x, i in zip((a, b, c), "abc"):
+            x["id"] = i
+        l1 = Lake(Store(d), t1)
+        l1.add("greenhouse", "acme", [a, b])
+        l1.add("greenhouse", "other", [c])
+        l1.add("remotive", "remotive", [J("Feed job", "Remote", "x")], closable=False)
+        s1 = l1.finish()
+        assert l1.initial and l1.counts["new"] == 4 and "initial load" in s1, s1
+        # second run: a changed, b gone, "other" not read (budget) -> c must stay open
+        t2 = t1 + dt.timedelta(hours=12)
+        b2 = dict(a, text="new text")
+        l2 = Lake(Store(d), t2)
+        l2.add("greenhouse", "acme", [b2])
+        s2 = l2.finish()
+        assert not l2.initial, s2
+        assert l2.counts == {"new": 0, "changed": 1, "unchanged": 0, "closed": 1}, l2.counts
+        assert len(l2.state) == 3, l2.state            # a, c and the feed job
+        rows = []
+        for root, _, files in os.walk(os.path.join(d, "changes")):
+            for f in files:
+                rows += [json.loads(x) for x in gzip.open(os.path.join(root, f), "rt")]
+        ev = sorted((r["event"], r["key"]) for r in rows)
+        assert ("closed", "greenhouse|acme|b") in ev and ("changed", "greenhouse|acme|a") in ev, ev
+        assert sum(1 for e in ev if e[0] == "new") == 4
+    finally:
+        shutil.rmtree(d)
+
+
 def test_misc():
     assert language("Wir suchen und bieten für Sie eine Stelle mit der Möglichkeit " * 8) == "de"
     assert language("We are looking for a person who will work with our team and the business " * 6) == "en"
@@ -171,5 +208,5 @@ def test_new_sources():
 
 
 if __name__ == "__main__":
-    test_parsers(); test_matching(); test_parttime(); test_misc(); test_new_sources()
+    test_parsers(); test_matching(); test_parttime(); test_misc(); test_new_sources(); test_lake()
     print("all offline checks passed")
