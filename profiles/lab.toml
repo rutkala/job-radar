@@ -1,0 +1,90 @@
+# Second profile: laboratory work. Same format as profile.toml.
+# Jobs are on site, so location means commuting distance, not remote work.
+name = "lab"
+label = "Laboratory jobs"
+search_words = ["laboratory", "laborant", "chemist", "chemik", "quality control", "kontrola jakości", "analityk"]
+min_score = 60
+keep_days = 21
+skip_companies = ["jobgether", "externaljobboards"]
+max_age_days = 90
+
+[[role]]
+name = "Lab analyst / technician"
+weight = 50
+needs_context = false
+title = '\b(laborant\w*|technik\w* laborato\w+|analityk\w* (laboratoryjn|chemiczn|instrumentaln|fizykochemiczn)\w*|lab(oratory)? (technician|analyst|assistant|specialist|scientist|chemist|worker)|specjalist\w* (ds\.? )?(laborato\w+|bada\w+|analiz\w*)|pracownik\w* laborato\w+|asystent\w* laborato\w+|starszy laborant\w*)'
+
+[[role]]
+name = "Quality control lab"
+weight = 45
+needs_context = false
+# Only lab roles in QC (analyst, chemist, lab technician), not factory-floor inspectors.
+title = '\b(qc|quality control)\b.{0,20}\b(analyst|chemist|lab\w*|technician|scientist)\b|\b(analityk|laborant|chemik|chemiczk)\w* (ds\.? )?kontroli jako\w+|\blaboratori\w* kontroli jako\w+'
+
+[[role]]
+name = "Chemist"
+weight = 45
+needs_context = false
+title = '\b(chemik|chemiczk\w*|chemist|analytical (chemist|scientist)|in[zż]ynier\w* chemi\w+)\b'
+
+[[role]]
+name = "Microbiology lab"
+weight = 40
+needs_context = false
+title = '\b(mikrobiolog\w*|microbiolog\w*)'
+
+[[role]]
+name = "R&D / research lab"
+weight = 35
+needs_context = true
+title = '\b(r&d|b\+r|research|badawcz\w*|rozwojow\w*|formulat\w*)\b.{0,25}\b(chemist|scientist|technician|specialist|chemik|specjalist|technolog|assistant|asystent)\w*'
+
+[exclude]
+title = '\b(produkcj\w*|production|zmianow\w*|shift|operator\w*|kontroler\w*|inspektor\w*|inspector|in-process|ipc|mi[eę]dzyoperacyjn\w*|na linii|line)\b|\b(sales|handlowiec|sprzeda\w+|przedstawiciel\w*|account|kierowca|driver|software|developer|programista|data (analyst|engineer|scientist)|dyrektor|director|head of|vp|kierownik|manager|team lead|magazyn\w*|warehouse)\b'
+
+[context]
+any = '\b(lab\w*|chem\w*|analit\w*|analyt\w*|hplc|gc|gmp|glp|quality control|kontrol\w* jako\w+|mikrobiolog\w*|microbiolog\w*|farmac\w*|pharma\w*|kosmet\w*|cosmet\w*|spo[zż]ywcz\w*|food)\b'
+strong = '\b(laborato\w+|laboratory|hplc|gc-?ms|chromatogra\w+|spektro\w+|spectro\w+|titrat\w+|miareczk\w+|gmp|glp|iso 17025|chemi\w+|odczynnik\w*|reagent\w*)\b'
+
+[bonus]
+"Graduates welcome" = [10, '\b(bez do[sś]wiadczenia|absolwent\w*|graduates?|entry[- ]level|junior|m[lł]odsz\w*|no experience)\b']
+"HPLC / GC" = [5, '\b(hplc|uplc|gc-?ms|gc|chromatogra\w+)\b']
+"GMP / GLP / ISO 17025" = [3, '\b(gmp|glp|iso 17025)\b']
+"Standard daytime hours" = [8, '\b(jednozmian\w*|one shift|day shift|praca w dzie[nń]|pon(iedzia[lł]ek)?\.?[ -]+pt|monday to friday|od poniedzia[lł]ku do pi[aą]tku|8[:.]?00[ -–]+16[:.]?00|7[:.]?00[ -–]+15[:.]?00)\b']
+
+[location]
+# Commuting area: Częstochowa and towns within about 50 km.
+poland = '\b(cz[eę]stochow\w*|k[lł]obuck\w*|myszk[oó]w\w*|blachowni\w*|myka[nń]ow\w*|poczesn\w*|kamienic\w* polsk\w*|mst[oó]w\w*|k[lł]omnic\w*|r[eę]dzin\w*|konopisk\w*|starcz\w*|koniecpol\w*|lubliniec\w*|krzepic\w*|wr[eę]czyc\w*|opat[oó]w k\w*|mied[zź]n\w*|przystaj[nń]\w*|kruszyn\w*|radomsk\w*|paj[eę]czn\w*|dzia[lł]oszyn\w*|kozieg[lł]ow\w*|[zż]ark\w*|poraj\w*|wo[zź]nik\w*|lel[oó]w\w*|przyr[oó]w\w*|gidl\w*|herb\w*|boron[oó]w\w*|kochanowic\w*|ciasn\w*|olsztyn\w* k\w* cz[eę]stochow\w*)\b'
+europe = '(?!x)x'
+remote = '\b(remote|zdaln\w*)\b'
+remote_from = '(?!x)x'
+poland_remote = 30
+europe_remote = 0
+poland_remote_in_text = 30
+poland_office = 30
+unclear = 0
+
+[limits]
+foreign_languages = ["de", "fr", "nl", "es", "it", "pt", "sv", "da", "no", "fi", "cs"]
+language_penalty = 25
+required_language = '\b(german|deutsch|niemieck\w*|french|francusk\w*|dutch|spanish|italian|swedish|danish|norwegian|finnish|czech)\b'
+# Jobs with shift work are dropped: only labs with standard daytime hours.
+blocked = '\b(prac\w* zmianow\w*|system\w* zmianow\w*|(dwu|trzy|cztero|2|3|4)[- ]?zmianow\w*|(2|3|4|dwie|trzy) zmian\w*|zmian\w* nocn\w*|nocn\w* zmian\w*|prac\w* w nocy|w porze nocnej|12[- ]?(h|godz\w*) zmian\w*|system\w* (4|cztero)[- ]?brygad\w*|ruch\w* ci[aą]g[lł]\w*|shift work|rotating shifts?|night shifts?|(2|3|two|three)[- ]shift|12[- ]hour shifts?|weekend shifts?)\b'
+
+# Part-time and temporary lab work in the same area.
+[parttime]
+base = 40
+field = '\b(laborant\w*|chem\w*|analityk\w*|analyst|kontrol\w* jako\w+|quality control|qc|mikrobiolog\w*|microbiolog\w*)\b'
+exclude = '\b(sales|handlowiec|sprzeda\w+|dyrektor|director|head of|kierownik|manager|produkcj\w*|production|zmianow\w*|shift|operator\w*|kontroler\w*|inspektor\w*|inspector)\b'
+
+[[parallel]]
+name = "part-time"
+points = 15
+where = "both"
+pattern = '\bpart[- ]?time\b|\bniepe[lł]n\w* (etat|wymiar)\w*|\b(1/2|3/4|0[.,][2-8]) etatu\b'
+
+[[parallel]]
+name = "temporary / cover"
+points = 10
+where = "both"
+pattern = '\b(temporary|fixed[- ]term|maternity cover|zast[eę]pstw\w*|umowa na czas okre[sś]lony|praca sezonow\w*|seasonal)\b'
