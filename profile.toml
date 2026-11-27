@@ -181,4 +181,4 @@ pattern = '\b([1-4]|one|two|three|four)[- ]?(weeks?|tygodni\w*)\b.{0,20}\b(proje
 name = "audit / assessment"
 points = 15
 where = "both"
-pattern = '\b(audit|health ?check|assessment|audyt)\w*\b.{0,20}\b(of )?(power ?bi|bi|reports?|dashboards?|data models?|semantic models?|fabric|tenant|capacity|analytics (estate|platform|stack))\b|\b(power ?bi|bi|fabric|dashboard|data model|semantic model|tenant|capacity)\b.{0,12}\b(audit|health ?check|assessment|audyt)\b'
+pattern = '\b(audits?|auditing|health ?checks?|assessments?|audyt\w*)\b.{0,20}\b(of )?(power ?bi|bi|reports?|dashboards?|data models?|semantic models?|fabric|tenant|capacity|analytics (estate|platform|stack))\b|\b(power ?bi|bi|fabric|dashboard|data model|semantic model|tenant|capacity)\b.{0,12}\b(audit|health ?check|assessment|audyt)\b'
