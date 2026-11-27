@@ -1,34 +1,76 @@
-# Job radar, 2026-11-26
+# Job radar, 2026-11-27
 
-**Roles: 5 new, 100 still open. Part-time and freelance: 13 new, 0 still open.**
+**Roles: 56 new, 100 still open. Part-time and freelance: 4 new, 13 still open.**
 
 ## Roles: new today
 
 | Score | Role | Company | Where | Posted | Notes |
 |---|---|---|---|---|---|
-| 75 | [AI Adoption Officer](https://apply.workable.com/j/DE060EC790) | mmdsmart-ltd | Poland, remote: Poland | 2026-08-05 |  |
-| 69 | [Project Manager - AI & Marketing Transformation](https://apply.workable.com/j/2483DE0ABB) | helprise-1 | Poland, remote: Kraków, Lesser Poland Voivodeship, Poland | 2026-09-24 |  |
-| 54 | [BI Analyst / BI Developer – Power BI, SQL & DAX (Remote, India)](https://gustileder.recruitee.com/o/bi-analyst-bi-developer-power-bi-sql-dax-remote-india) | gustileder | Remote, region not stated: Homeoffice | 2026-11-26 |  |
-| 47 | [Power BI Specialist - PL](https://globalwindservice.recruitee.com/o/power-bi-specialist-pl) | globalwindservice | Poland, office or hybrid: Szczecin, Zachodniopomorskie, Poland | 2026-10-07 | office days |
-| 45 | [People Analytics & Transformation Consultant](https://apply.workable.com/j/F0C3D7F035) | helprise-1 | Poland, office or hybrid: Warsaw, Masovian Voivodeship, Poland | 2026-10-07 | may require German; office days |
+| 74 | [Sr. Product Manager](https://weworkremotely.com/remote-jobs/6sense-sr-product-manager) | 6sense | Remote, Europe or worldwide: Anywhere in the World |  |  |
+| 74 | [Operational BI Lead – Reporting & Rollout](https://bpxsa.traffit.com/public/an/f8dd329f4510e74ca4252dcc31c5cd4774316851?source=career_page) | bpxsa | Text says remote from Poland or Europe:  | 2026-11-05 |  |
+| 70 | [AWS Solution Architect](https://tameshi.traffit.com/public/an/419fd9ad6c45b317be530b690a9cd8f944534d3d?source=career_page) | tameshi | Poland, remote mentioned in the text: Łódź, Polska | 2026-09-22 |  |
+| 69 | [Head of Data & Analytics (iGaming)](https://jobs.ashbyhq.com/onhires/6c041e7f-0e4f-44e5-8ab5-1fc99820377e) | onhires | Remote, Europe or worldwide: Europe (remote), Ukraine | 2026-11-26 |  |
+| 68 | [AI Decisioning Strategy Consultant](https://jobs.ashbyhq.com/hightouch-inc/e6ba1b95-f1d6-4494-a4ad-e30ad5278732) | hightouch-inc | Remote, Europe or worldwide: Remote (Europe), Paris, London | 2026-09-25 |  |
+| 68 | [Data Product Manager / Lead – FinTech (BNPL & Payments)](https://peoplemorepl.traffit.com/public/an/ff00e0ce85835b11a2cd4853366af7c7596a4266?source=career_page) | peoplemorepl | Location unclear, remote mentioned:  | 2026-11-06 |  |
+| 68 | [Data & Solution Architect](https://primaris.traffit.com/public/an/33b1ea5d8d480165beb570a3be87a7b955444d5a?source=career_page) | primaris | Location unclear, remote mentioned:  | 2026-11-17 |  |
+| 67 | [Sales Engineer](https://jobs.ashbyhq.com/iceye/1102b455-bc29-4db3-947e-81056a37b99c) | iceye | Poland, remote: Espoo, Amsterdam, Lisbon, Valencia, Berlin, Athens, Munich,  | 2026-10-27 |  |
+| 67 | [Manager, People Analytics](https://job-boards.greenhouse.io/canonical_managed_posts/jobs/8373747) | canonical_managed_posts | Poland, remote mentioned in the text: Warsaw, Poland / Home Based - Americas, Home Based - EMEA | 2026-11-10 |  |
+| 67 | [Project Manager (Analytics&AI)](https://ttms.traffit.com/public/an/0c099f310af67e21c864a58878edf5184358585337673d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-10-01 |  |
+| 66 | [AI-Native Business Consultant](https://ttms.traffit.com/public/an/18ba8c457e6b83de281d8e58faf0fef9447339594e413d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-09-15 |  |
+| 65 | [Data & Analytics Lead](https://jobs.lever.co/1inch/e1d3b43d-4208-4bbe-a4b0-2115037e3874) | 1inch | Poland, remote: Poland, UK, Portugal (remote) | 2026-10-15 |  |
+| 65 | [Reporting & ERP Lead](https://jobs.ashbyhq.com/universe/2abe7c63-94fd-47b5-a291-ea9c609daccc) | universe | Poland, remote: Kyiv or Warsaw, Lviv, Remote | 2026-11-20 |  |
+| 64 | [Resident Solution Architect](https://weworkremotely.com/remote-jobs/fivetran-resident-solution-architect) | Fivetran  | Remote, Europe or worldwide: Anywhere in the World |  |  |
+| 64 | [AI / ML Consultant](https://jobs.lever.co/crosslaketech/12c592e5-7682-452c-bd3a-3bc73e8353ac) | crosslaketech | Remote, Europe or worldwide: Remote (Europe) (remote) | 2026-09-24 |  |
+| 63 | [Senior AI Solution Architect](https://ttms.traffit.com/public/an/0524b36681fbf4ec19d275632d32ec0d4d7572392b513d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-11-17 |  |
+| 60 | [Principal Product Manager – Database Change Governance, Security & Ecosystem Integrations (Remote, US-Based)](https://www.liquibase.com/company/careers?gh_jid=8011001) | liquibase | Remote, region not stated: Remote | 2026-10-19 |  |
+| 59 | [Consultant, Business Intelligence](https://job-boards.greenhouse.io/apiphani/jobs/5236591007) | apiphani | Remote, region not stated: Remote | 2026-11-09 |  |
+| 57 | [Director, Talent Analytics](https://job-boards.greenhouse.io/canonical_managed_posts/jobs/8365044) | canonical_managed_posts | Poland, remote mentioned in the text: Warsaw, Poland / Home Based - EMEA | 2026-11-09 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/076bcfae-d0ba-4b59-b7d4-3523fc5a00a7) | jobgether | Text says remote from Poland or Europe: Belgium (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/2c364e5d-4c00-4190-bde6-05e56a524656) | jobgether | Text says remote from Poland or Europe: Ireland (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/2cd77894-41e6-4f7e-86fc-0d67e7a6d9ee) | jobgether | Text says remote from Poland or Europe: France (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/3fe4d00a-4a2e-4660-b282-fe9e00d3ddd6) | jobgether | Text says remote from Poland or Europe: UK (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/4ca61f08-6c18-4469-8f2c-0bcab8ac373c) | jobgether | Text says remote from Poland or Europe: Turkey (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/5ef9da68-b210-4fec-aeea-951f876e26fb) | jobgether | Text says remote from Poland or Europe: Netherlands (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/7ee0354e-13f8-46c1-9934-a0ce93e1467d) | jobgether | Text says remote from Poland or Europe: Switzerland (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/97b94395-1dc0-48d5-93a5-35bbfb9646f5) | jobgether | Text says remote from Poland or Europe: Romania (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/a98d449c-e3fc-47cc-b4e1-0de0177ad0cf) | jobgether | Text says remote from Poland or Europe: Spain (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/bac530c8-b397-4120-b5f0-c8dd77716008) | jobgether | Text says remote from Poland or Europe: Germany (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/bd792fc9-a39c-4840-a35c-af4da418381d) | jobgether | Text says remote from Poland or Europe: Italy (remote) | 2026-11-27 |  |
+| 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/d3b6af6c-acda-487d-9fd5-c45f56d9dcf9) | jobgether | Text says remote from Poland or Europe: Portugal (remote) | 2026-11-27 |  |
+| 57 | [Technical Product Manager, CRM & Communications Platform](https://www.outsideinc.com/openings?gh_jid=5425061008) | outside | Remote, region not stated: Remote | 2026-10-07 |  |
+| 56 | [Senior Sales Engineer (East/Central)](https://jobs.ashbyhq.com/prefect/5d1181d6-f772-4a6e-93d1-16d555e2fb8d) | prefect | Remote, region not stated: Remote | 2026-09-23 |  |
+| 56 | [Senior Data Product Manager](https://jobs.ashbyhq.com/talkiatry/5cc505aa-ef66-46f8-986c-a2422407bc9b) | talkiatry | Remote, region not stated: Remote | 2026-08-13 |  |
+| 55 | [Data & Analytics Consultant](https://econsulting.traffit.com/public/an/9d7edad1b9261ed8c4bd2c463d661be25a474239?source=career_page) | econsulting | Location unclear, remote mentioned:  | 2026-10-22 |  |
+| 55 | [Interim HR Manager (k/m)](https://inwenta.traffit.com/public/an/3aebb20c33bb2d0bc4350db559994957356f4671?source=career_page) | inwenta | Poland, office or hybrid: Warszawa, Polska | 2026-11-19 | office days |
+| 55 | [Data & BI Architect (German C1) / MS Fabric, Power BI & Snowflake](https://polcode.traffit.com/public/an/41c0a7c82d5584bcb6313096a640f47a454a343d?source=career_page) | polcode | Text says remote from Poland or Europe:  | 2026-11-10 | may require German |
+| 55 | [Manager, Client Analytics](https://job-boards.greenhouse.io/deepintent/jobs/6233391004) | deepintent | Text says remote from Poland or Europe: New York, New York / DeepIntent - US | 2026-10-26 |  |
+| 54 | [Insurance Product Manager, Car](https://jobs.ashbyhq.com/Lemonade/8e911c39-caae-43d2-8908-d579a2739a0e) | lemonade | Remote, region not stated: Remote | 2026-10-02 |  |
+| 54 | [Microsoft 365 Copilot Consultant / Modern Work Expert](https://itlt.traffit.com/public/an/380b2001ad2c8209cc32aea68df9ca5b32336442?source=career_page) | itlt | Location unclear, remote mentioned:  | 2026-11-04 |  |
+| 54 | [Technical Product Owner](https://mindboxgroup.traffit.com/public/an/a9b5345d02178a0635c207f0401bda135a7572435a413d3d?source=career_page) | mindboxgroup | Location unclear, remote mentioned:  | 2026-11-06 |  |
+| 54 | [Product Manager](https://job-boards.greenhouse.io/bitfocus/jobs/5271235007) | bitfocus | Remote, region not stated: Remote | 2026-10-21 |  |
+| 53 | [Staff AI Enablement Engineer](https://jobs.ashbyhq.com/talkiatry/9acb1175-2b0a-461b-b736-477de6e21c4a) | talkiatry | Remote, region not stated: Remote | 2026-09-09 |  |
+| 50 | [Senior Growth Product Manager, AI-Native](https://jobs.ashbyhq.com/magiceden/1bde0a10-11c5-4b21-8cef-983e77eb3722) | magiceden | Remote, region not stated: Remote | 2026-10-16 |  |
+| 49 | [Azure Synapse Analytics Consultant](https://bpxsa.traffit.com/public/an/abd41e5d6ceeeabca8cc5c64c7b91594634d3264?source=career_page) | bpxsa | Location unclear, remote mentioned:  | 2026-09-18 |  |
+| 49 | [Solution Architect](https://jobs.smartrecruiters.com/arhs/744000151074379) | arhs | Poland, office or hybrid: Warsaw, Masovian Voivodeship, pl | 2026-09-22 | office days |
+| 49 | [Project Manager - AI & Marketing Transformation](https://helprise.traffit.com/public/an/b425dc8172b2009674d9e4b2f08f93fb397a642f?source=career_page) | helprise | Location unclear, remote mentioned:  | 2026-10-16 |  |
+| 49 | [Senior Business Analyst](https://ttms.traffit.com/public/an/d76e895a893bd2c2b595606833043efb7a4d485763773d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-11-09 |  |
+| 49 | [Senior Business Analyst](https://ttms.traffit.com/public/an/c1ba7d70ddd728bed3d6ac3a9c24d672635a385144773d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-11-09 |  |
+| 47 | [Power BI Developer](https://beinit.traffit.com/public/an/4ce40a8e6917dd76f602efc2be23f039756c4d584c773d3d?source=career_page) | beinit | Poland, office or hybrid: Warszawa, Polska | 2026-11-17 | office days |
+| 47 | [Partner, AI-Enabled Performance Transformation](https://jobs.ashbyhq.com/chartis/ee0f3ded-825b-4422-bda9-9e9bb498518a) | chartis | Remote, region not stated: Remote | 2026-11-09 |  |
+| 47 | [Microsoft Data & AI Senior Consultant](https://jobs.lever.co/mcaconnect/81d725cf-6d43-4958-a4e5-229c3da363fa) | mcaconnect | Remote, region not stated: Remote (remote) | 2026-11-19 |  |
+| 45 | [Starszy Analityk Biznesowy / Analityk Danych](https://auticon.traffit.com/public/an/ab6bafc4f5e7f983b34179918b0957824c46383d?source=career_page) | auticon | Poland, office or hybrid: Kraków, Polska | 2026-08-27 | office days |
+| 45 | [Senior Business Analyst / Data Analyst](https://auticon.traffit.com/public/an/67812a7aadfc9d00eaf95f2bfeb133de4a68593d?source=career_page) | auticon | Poland, office or hybrid: Kraków, Polska | 2026-08-27 | office days |
+| 45 | [Solution Architect - Azure Data Analytics](https://jobs.lever.co/corebts/3a2b95f4-f74a-4ce2-ac09-b2fbbbfe7d75) | corebts | Remote, region not stated: Remote (remote) | 2026-08-26 |  |
+| 45 | [Business Analyst / Data Product Analyst](https://primaris.traffit.com/public/an/6b3dc5da57bd2aeb8c9961ff1d7bceae6f72654d?source=career_page) | primaris | Location unclear, remote mentioned:  | 2026-11-18 |  |
 
 ## Part-time and freelance: new today
 
 | Score | Role | Company | Where | Posted | Notes |
 |---|---|---|---|---|---|
-| 94 | [Data Analytics Consultant (m/f/n)](https://jobs.smartrecruiters.com/inpost/744000162498779) | inpost | Poland, remote: Warszawa, Województwo mazowieckie, pl | 2026-11-19 | signal: consultant |
-| 89 | [Data Platform Product Owner / Business Analyst](https://jobs.lever.co/margo-group/227cc1e8-7106-441b-af26-436cbdf9caa8) | margo-group | Poland, remote: Warsaw (remote) | 2026-09-28 | signal: contract |
-| 89 | [1231 / Data & BI Specialist (Long-term, Part-time)](https://apply.workable.com/j/B8DB543943) | intetics-2 | Poland, remote: Poland | 2026-11-20 | signal: part-time |
-| 79 | [Marketing Analytics AI Research Contributor](https://jobs.ashbyhq.com/aptura/2accfded-9a2d-4850-b267-917c81f9d523) | aptura | Remote, Europe or worldwide: Global | 2026-10-19 | signal: contract |
-| 74 | [Analytics Implementation Consultant](https://job-boards.eu.greenhouse.io/sportygroup/jobs/4933981101) | sportygroup | Remote, Europe or worldwide: Europe - Remote | 2026-09-22 | signal: consultant |
-| 70 | [Data Analytics Consultant](https://antalpl.traffit.com/public/an/0065a60987622d5c23280b8171234ce8706f36563972493d?source=career_page) | antalpl | Location unclear, remote mentioned:  | 2026-11-26 | signal: consultant |
-| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8765172-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Riga, Latvia , Rīga, Latvia (hybrid) | 2026-11-19 | signal: temporary |
-| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8756827-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Vilnius, Lithuania , Vilnius, Lithuania (none) | 2026-11-17 | signal: temporary |
-| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8747750-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Tallinn, Estonia , Tallinn, Estonia (hybrid) | 2026-11-16 | signal: temporary |
-| 60 | [People Analytics & Transformation Consultant](https://apply.workable.com/j/F0C3D7F035) | helprise-1 | Poland, office or hybrid: Warsaw, Masovian Voivodeship, Poland | 2026-10-07 | signal: consultant; may require German |
-| 60 | [Data Architect](https://careers.n-ix.com/jobs/5027037101?gh_jid=5027037101) | nix | Text says remote from Poland or Europe: Europe; Ukraine / Europe, Ukraine | 2026-11-19 | signal: freelancers (in the text only) |
-| 59 | [HR Data Project - Product Owner / Business analyst](https://jobs.lever.co/margo-group/1c6deb27-c035-4540-bcf3-09a796443536) | margo-group | Poland, office or hybrid: Warsaw (hybrid) | 2026-09-28 | signal: contract |
-| 59 | [Data Governance / Business Analyst Consultant](https://job-boards.greenhouse.io/xebiacee/jobs/6230709004) | xebiacee | Poland, office or hybrid: Poland / XCEE | 2026-11-16 | signal: consultant |
+| 80 | [Data Engineer, AI & Analytics (Remote - Contractor)](https://jobs.ashbyhq.com/masabi/9bab4382-fdaa-476e-b7f4-5ee746005e5b) | masabi | Poland, remote: Poland | 2026-11-26 | signal: contractor |
+| 76 | [Head of Data Consultant](https://jobs.lever.co/crosslaketech/99bb83b2-1f12-473c-b850-d63d1431b3b3) | crosslaketech | Remote, Europe or worldwide: Remote (Europe) (remote) | 2026-09-25 | signal: contract |
+| 65 | [Analytics Engineer Contractor](https://jobs.lever.co/blueland/d7f4e61f-9fce-4e02-bd53-2f289a3e9449) | blueland | Remote, region not stated: Remote (remote) | 2026-10-08 | signal: contractor |
+| 59 | [Consultant, Business Intelligence](https://job-boards.greenhouse.io/apiphani/jobs/5236591007) | apiphani | Remote, region not stated: Remote | 2026-11-09 | signal: part-time (in the text only) |
 
 ## Roles: still open
 
@@ -40,6 +82,7 @@
 | 80 | [AI Product Owner/Senior Product Owner](https://careers.n-ix.com/jobs/4987405101?gh_jid=4987405101) | nix | Poland, remote mentioned in the text: Poland / Europe, Ukraine | 2026-11-19 |  |
 | 79 | [Data Analytics Consultant (m/f/n)](https://jobs.smartrecruiters.com/inpost/744000162498779) | inpost | Poland, remote: Warszawa, Województwo mazowieckie, pl | 2026-11-19 |  |
 | 76 | [Microsoft Fabric Architect](https://chabre.traffit.com/public/an/bcbe7466c74ea5f6aca1583d423f8f4e465a3962?source=career_page) | chabre | Poland, remote mentioned in the text: Warszawa, Polska | 2026-11-05 |  |
+| 75 | [AI Adoption Officer](https://apply.workable.com/j/DE060EC790) | mmdsmart-ltd | Poland, remote: Poland | 2026-08-05 |  |
 | 75 | [Solutions Consultant (EU)](https://job-boards.greenhouse.io/eclinicalsolutions/jobs/5300920007) | eclinicalsolutions | Remote, Europe or worldwide: Remote, EU / Europe | 2026-11-18 |  |
 | 74 | [Lead Data Analyst](https://jobs.ashbyhq.com/ruby-labs/a680a85e-8af2-4d15-a126-fb9d18930f98) | ruby-labs | Poland, remote: Ukraine, Moldova, Latvia, Albania, North Macedonia, Slovakia | 2026-10-06 |  |
 | 73 | [Senior Product Manager](https://job-boards.greenhouse.io/nozominetworks/jobs/4745042005) | nozominetworks | Text says remote from Poland or Europe: United States / Remote | 2026-11-10 |  |
@@ -52,6 +95,7 @@
 | 71 | [Lead AI Solutions Engineer](https://job-boards.greenhouse.io/externaljobboards/jobs/6240467004) | externaljobboards | Poland, remote mentioned in the text: Bulgaria, Lithuania, Poland , Romania / Bulgaria, Poland , R | 2026-11-26 |  |
 | 71 | [Principal Product Manager - Professional Trading Tools & Experience](https://job-boards.greenhouse.io/okx/jobs/8004117003) | okx | Remote, Europe or worldwide: Remote Roles - EMEA; Sliema, Malta / Remote Roles - EMEA, Sl | 2026-10-07 |  |
 | 71 | [Technology Product Manager - HR Systems](https://jobs.smartrecruiters.com/inpost/744000163412234) | inpost | Poland, office or hybrid: Warszawa, Województwo mazowieckie, pl | 2026-11-24 | office days |
+| 69 | [Project Manager - AI & Marketing Transformation](https://apply.workable.com/j/2483DE0ABB) | helprise-1 | Poland, remote: Kraków, Lesser Poland Voivodeship, Poland | 2026-09-24 |  |
 | 69 | [Analytics Manager](https://job-boards.eu.greenhouse.io/moniepoint/jobs/4941669101) | moniepoint | Poland, remote: Remote, Poland / Moniepoint Headquaters | 2026-11-12 |  |
 | 69 | [Finance Reporting Lead](https://job-boards.eu.greenhouse.io/readdle70/jobs/5019138101) | readdle70 | Poland, remote: Warsaw, Stockholm, Remote / Remote | 2026-10-28 |  |
 | 69 | [Internal AI Enablement Lead](https://jobs.ashbyhq.com/n8n/fea09cae-58f1-4f3e-b4a0-daba6e7e5002) | n8n | Poland, remote: Germany, Norway, Latvia, Netherlands, Hungary, Portugal, Pol | 2026-10-13 |  |
@@ -112,6 +156,7 @@
 | 55 | [Data Analytics Consultant](https://antalpl.traffit.com/public/an/0065a60987622d5c23280b8171234ce8706f36563972493d?source=career_page) | antalpl | Location unclear, remote mentioned:  | 2026-11-26 |  |
 | 55 | [Senior Business Analyst](https://job-boards.eu.greenhouse.io/moniepoint/jobs/4936515101) | moniepoint | Poland, remote: Remote, Poland / Moniepoint Headquaters | 2026-11-11 |  |
 | 54 | [Senior Product Manager, Intelligent Platforms](https://careers.hellofresh.com/global/en/job/8095957?gh_jid=8095957) | hellofresh | Poland, office or hybrid: Warszawa, Masovian Voivodeship, Poland | 2026-11-17 | office days |
+| 54 | [BI Analyst / BI Developer – Power BI, SQL & DAX (Remote, India)](https://gustileder.recruitee.com/o/bi-analyst-bi-developer-power-bi-sql-dax-remote-india) | gustileder | Remote, region not stated: Homeoffice | 2026-11-26 |  |
 | 54 | [Senior AI Governance Consultant](https://in4ge.traffit.com/public/an/099172e278c425af7f49a7b3359c3367374f2b7a?source=career_page) | in4ge | Poland, office or hybrid: Warszawa, Polska | 2026-10-15 | office days |
 | 54 | [SEO & Analytics Strategist](https://job-boards.greenhouse.io/fueledcareers/jobs/4889918008) | fueledcareers | Remote, region not stated: Remote | 2026-10-23 |  |
 | 54 | [Sustainability Reporting Manager](https://job-boards.greenhouse.io/greenplaces/jobs/5470197008) | greenplaces | Remote, region not stated: Remote | 2026-11-13 |  |
@@ -131,31 +176,42 @@
 | 51 | [Principal, Commercial and Growth Analytics](https://genedx.com/careers/openings?gh_jid=4743592005) | genedx | Remote, region not stated: Remote | 2026-10-15 |  |
 | 51 | [Lead, Finance & Analytics](https://job-boards.greenhouse.io/atomicindustriesinc/jobs/4517722009) | atomicindustriesinc | Remote, region not stated: Remote | 2026-11-21 |  |
 | 51 | [Assoc Director/Director, Enterprise Technology & AI Strategy](https://job-boards.greenhouse.io/kuraoncology/jobs/6268830004) | kuraoncology | Remote, region not stated: remote / Remote | 2026-11-24 |  |
-| 51 | [Manager, Analytics Engineering](https://job-boards.greenhouse.io/velir/jobs/5470057008) | velir | Remote, region not stated: Remote | 2026-11-02 |  |
-| 51 | [Data / Analytics Engineer (Microsoft Fabric, Power BI)](https://youriteams.traffit.com/public/an/e6455ab23b5dd05ef72d0c6907ace4ec56374470?source=career_page) | youriteams | Location unclear, remote mentioned:  | 2026-11-02 |  |
-| 50 | [AI Transformation Architect [IC4]](https://job-boards.greenhouse.io/sourcegraph91/jobs/6264761004) | sourcegraph91 | Remote, region not stated: Remote / Remote | 2026-11-19 |  |
 
 ## Part-time and freelance: still open
 
-None.
+| Score | Role | Company | Where | Posted | Notes |
+|---|---|---|---|---|---|
+| 94 | [Data Analytics Consultant (m/f/n)](https://jobs.smartrecruiters.com/inpost/744000162498779) | inpost | Poland, remote: Warszawa, Województwo mazowieckie, pl | 2026-11-19 | signal: consultant |
+| 89 | [1231 / Data & BI Specialist (Long-term, Part-time)](https://apply.workable.com/j/B8DB543943) | intetics-2 | Poland, remote: Poland | 2026-11-20 | signal: part-time |
+| 89 | [Data Platform Product Owner / Business Analyst](https://jobs.lever.co/margo-group/227cc1e8-7106-441b-af26-436cbdf9caa8) | margo-group | Poland, remote: Warsaw (remote) | 2026-09-28 | signal: contract |
+| 79 | [Marketing Analytics AI Research Contributor](https://jobs.ashbyhq.com/aptura/2accfded-9a2d-4850-b267-917c81f9d523) | aptura | Remote, Europe or worldwide: Global | 2026-10-19 | signal: contract |
+| 74 | [Analytics Implementation Consultant](https://job-boards.eu.greenhouse.io/sportygroup/jobs/4933981101) | sportygroup | Remote, Europe or worldwide: Europe - Remote | 2026-09-22 | signal: consultant |
+| 70 | [Data Analytics Consultant](https://antalpl.traffit.com/public/an/0065a60987622d5c23280b8171234ce8706f36563972493d?source=career_page) | antalpl | Location unclear, remote mentioned:  | 2026-11-26 | signal: consultant |
+| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8747750-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Tallinn, Estonia , Tallinn, Estonia (hybrid) | 2026-11-16 | signal: temporary |
+| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8756827-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Vilnius, Lithuania , Vilnius, Lithuania (none) | 2026-11-17 | signal: temporary |
+| 69 | [BI Product Owner/ Functional Lead of ESG Data Management (Temporary contract)](https://luminorbank.teamtailor.com/jobs/8765172-bi-product-owner-functional-lead-of-esg-data-management-temporary-contract) | luminorbank | Text says remote from Poland or Europe: Riga, Latvia , Rīga, Latvia (hybrid) | 2026-11-19 | signal: temporary |
+| 60 | [People Analytics & Transformation Consultant](https://apply.workable.com/j/F0C3D7F035) | helprise-1 | Poland, office or hybrid: Warsaw, Masovian Voivodeship, Poland | 2026-10-07 | signal: consultant; may require German |
+| 60 | [Data Architect](https://careers.n-ix.com/jobs/5027037101?gh_jid=5027037101) | nix | Text says remote from Poland or Europe: Europe; Ukraine / Europe, Ukraine | 2026-11-19 | signal: freelancers (in the text only) |
+| 59 | [Data Governance / Business Analyst Consultant](https://job-boards.greenhouse.io/xebiacee/jobs/6230709004) | xebiacee | Poland, office or hybrid: Poland / XCEE | 2026-11-16 | signal: consultant |
+| 59 | [HR Data Project - Product Owner / Business analyst](https://jobs.lever.co/margo-group/1c6deb27-c035-4540-bcf3-09a796443536) | margo-group | Poland, office or hybrid: Warsaw (hybrid) | 2026-09-28 | signal: contract |
 
 ## What was read
 
 | Source | Companies known | Checked today | Jobs read | Matches | Gone | Errors | Note |
 |---|---|---|---|---|---|---|---|
-| arbeitnow | 0 | 1 | 1482 | 0 | 0 | 0 |  |
-| ashby | 1227 | 1175 | 34625 | 12 | 52 | 0 |  |
-| greenhouse | 5567 | 4443 | 163813 | 73 | 1114 | 0 | slowed down 10 times |
+| arbeitnow | 0 | 1 | 1467 | 0 | 0 | 0 |  |
+| ashby | 4725 | 3752 | 60638 | 23 | 921 | 0 |  |
+| greenhouse | 11931 | 2544 | 36120 | 8 | 2456 | 0 | asked to slow down 12 times; the rest waits for the next run |
 | himalayas | 0 | 1 | 200 | 0 | 0 | 0 |  |
 | jobicy | 0 | 1 | 200 | 0 | 0 | 0 |  |
-| lever | 265 | 208 | 17946 | 5 | 57 | 0 |  |
-| lever_eu | 69 | 61 | 2438 | 1 | 8 | 0 |  |
-| personio | 3108 | 1156 | 10912 | 0 | 504 | 0 | asked to slow down 12 times; the rest waits for the next run |
-| recruitee | 1045 | 280 | 4332 | 2 | 17 | 1 | asked to slow down 12 times; the rest waits for the next run |
+| lever | 2536 | 1935 | 65527 | 23 | 544 | 0 |  |
+| lever_eu | 126 | 87 | 3269 | 1 | 31 | 0 |  |
+| personio | 7471 | 818 | 5306 | 0 | 706 | 0 | asked to slow down 12 times; the rest waits for the next run |
+| recruitee | 1172 | 156 | 2403 | 0 | 23 | 0 | asked to slow down 12 times; the rest waits for the next run |
 | remoteok | 0 | 1 | 100 | 0 | 0 | 0 |  |
 | remotive | 0 | 1 | 16 | 0 | 0 | 0 |  |
-| smartrecruiters | 1038 | 1037 | 40645 | 15 | 1 | 0 |  |
-| teamtailor | 1116 | 972 | 11199 | 6 | 141 | 3 |  |
-| traffit | 199 | 169 | 2985 | 6 | 0 | 29 |  |
-| weworkremotely | 0 | 1 | 100 | 3 | 0 | 0 |  |
-| workable | 4357 | 1015 | 34480 | 5 | 36 | 0 | asked to slow down 12 times; the rest waits for the next run |
+| smartrecruiters | 2843 | 2841 | 59761 | 15 | 0 | 1 |  |
+| teamtailor | 3747 | 977 | 11145 | 0 | 2619 | 7 |  |
+| traffit | 546 | 437 | 6321 | 25 | 5 | 74 |  |
+| weworkremotely | 0 | 1 | 100 | 4 | 0 | 0 |  |
+| workable | 7498 | 378 | 2351 | 0 | 45 | 0 | asked to slow down 12 times; the rest waits for the next run |
