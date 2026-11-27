@@ -88,10 +88,10 @@ def run_site(site, profile, budget_s, workers, limit, stats, found):
             # The site asked us to slow down: everyone waits, and the company is retried next run.
             with lock:
                 pace["throttles"] += 1
-                pace["pause_until"] = time.time() + 45
-                if pace["throttles"] >= 12:
+                pace["pause_until"] = time.time() + 60
+                if pace["throttles"] >= 40:
                     stop.set()
-                    st["stopped"] = "asked to slow down 12 times; the rest waits for the next run"
+                    st["stopped"] = "asked to slow down 40 times; the rest waits for the next run"
             return slug, None, "skip"
         except Exception:
             return slug, None, "error"
@@ -133,7 +133,7 @@ def fresh(job, profile):
 
 def both(profile, j):
     """The role match and/or the part-time match for a job (0, 1 or 2 results)."""
-    if not fresh(j, profile):
+    if not fresh(j, profile) or j["company"].lower() in profile.skip_companies:
         return []
     out = []
     m = profile.evaluate(j)
@@ -214,6 +214,15 @@ def main():
     save_json("data/matches.json", matches)
 
     by_score = lambda ids: sorted((matches[i] for i in ids if i in matches), key=lambda r: -r["score"])
+    seen_pairs, dupes = set(), []
+    for k, v in sorted(matches.items(), key=lambda kv: (-kv[1]["score"], kv[0])):
+        pair = (v["company"].lower(), v["title"].lower(), v.get("list", "roles"))
+        if pair in seen_pairs:
+            dupes.append(k)
+        seen_pairs.add(pair)
+    for k in dupes:
+        del matches[k]
+    save_json("data/matches.json", matches)
     new_set = set(new_ids)
     pick = lambda kind, new: by_score([k for k, v in matches.items()
                                        if v.get("list", "roles") == kind and (k in new_set) == new])[:100]

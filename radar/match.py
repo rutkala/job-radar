@@ -42,6 +42,7 @@ class Profile:
         self.min_score = c["min_score"]
         self.keep_days = c["keep_days"]
         self.max_age_days = c.get("max_age_days", 120)
+        self.skip_companies = {x.lower() for x in c.get("skip_companies", [])}
         self.roles = [(r["name"], r["weight"], r["needs_context"], rx(r["title"])) for r in c["role"]]
         self.exclude = rx(c["exclude"]["title"])
         self.context = rx(c["context"]["any"])

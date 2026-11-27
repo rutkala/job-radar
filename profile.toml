@@ -3,6 +3,8 @@
 
 min_score = 45          # a job needs at least this score to be reported
 keep_days = 14          # how long a match stays in the "still open" list
+# Boards that only repost other companies' jobs (the same job many times):
+skip_companies = ["jobgether", "externaljobboards"]
 max_age_days = 120      # postings older than this are dropped (when the date is known)
 
 # --- Roles: matched on the job title --------------------------------------
