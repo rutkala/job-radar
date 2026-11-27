@@ -1,6 +1,6 @@
 # Laboratory jobs: job radar, 2026-11-27
 
-**Matches: 0 new, 0 still open. Part-time / temporary: 0 new, 0 still open. Jobs read today: 608406.**
+**Matches: 0 new, 0 still open. Part-time / temporary: 0 new, 0 still open. Jobs read today: 626700.**
 
 ## New today
 
