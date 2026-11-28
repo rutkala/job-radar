@@ -1,24 +1,27 @@
-# Job radar, 2026-11-27
+# Job radar, 2026-11-28
 
-**Roles: 6 new, 100 still open. Parallel work: 2 new, 78 still open.**
+**Roles: 7 new, 100 still open. Parallel work: 4 new, 80 still open.**
 
 ## Roles: new today
 
 | Score | Role | Company | Where | Posted | Notes |
 |---|---|---|---|---|---|
-| 66 | [Senior Product Manager, Data](https://nexstar.wd5.myworkdayjobs.com/nexstar/job/NY-New-York1301-Avenue-of-the-Americas-Nexstar/Senior-Product-Manager--Data_REQ-43068) | nexstar | Text says remote from Poland or Europe: NY-New York;1301 Avenue of the Americas (Nexstar) | 2026-09-18 |  |
-| 57 | [Data Product Owner](https://marathonhealth.wd501.myworkdayjobs.com/Marathon-Health-Careers/job/Remote/Data-Product-Owner_JR109043) | marathonhealth | Remote, region not stated: Remote | 2026-11-09 |  |
-| 55 | [Power BI Sales Performance Dashboard](https://www.freelancer.com/projects/business-intelligence/Power-Sales-Performance-Dashboard) | Freelancer.com client | Remote, Europe or worldwide: Worldwide (remote) |  |  |
-| 50 | [Process Manager Reporting and Analytics](https://kiongroup.wd3.myworkdayjobs.com/KIONGroup/job/Krakw-Poland/Process-Manager-Reporting-and-Analytics_JR-0091506) | kiongroup | Poland, office or hybrid: Kraków, Poland | 2026-11-06 | office days |
-| 49 | [Lead Technical Data Analyst](https://linklaters.wd3.myworkdayjobs.com/Linklaters/job/Warsaw/Lead-Technical-Data-Analyst_R00016481) | linklaters | Poland, office or hybrid: Warsaw | 2026-11-19 | office days |
-| 47 | [Therapeutic Analytics Lead, Clinical Trial Strategy](https://iqvia.wd1.myworkdayjobs.com/IQVIA/job/Warsaw-Poland/Therapeutic-Analytics-Lead--Clinical-Trial-Strategy_R1576862) | iqvia | Poland, office or hybrid: Warsaw, Poland | 2026-10-28 | office days |
+| 77 | [Solutions Engineer I](https://stord.wd503.myworkdayjobs.com/Stord_External_Career/job/ATL1---Atlanta-GA/Solutions-Engineer-I_JR103355-2) | stord | Remote, Europe or worldwide: ATL1 - Atlanta, GA, LAS2 - Las Vegas, NV - W Cheyenne Ave, C | 2026-10-13 |  |
+| 59 | [Technology and Reporting Manager](https://statestreet.wd1.myworkdayjobs.com/Global/job/Gdansk-Poland/Technology-and-Reporting-Manager_R-798691) | statestreet | Poland, office or hybrid: Gdansk, Poland, Krakow, Poland | 2026-11-27 | office days |
+| 58 | [Sr. Product Manager, Product Design & User Research, Sophia Learning](https://strayer.wd1.myworkdayjobs.com/SEI/job/Remote/Sr-Product-Manager--Product-Design---User-Research--Sophia-Learning_R31355-1) | strayer | Remote, region not stated: Remote | 2026-11-13 |  |
+| 58 | [Sr. Product Manager, Sophia Learning](https://strayer.wd1.myworkdayjobs.com/SEI/job/Remote/Sr-Product-Manager--Sophia-Learning_R31097-2) | strayer | Remote, region not stated: Remote | 2026-10-23 |  |
+| 52 | [Enterprise Analytics Consultant](https://sentara.wd1.myworkdayjobs.com/SCS/job/Enterprise-Analytics-Consultant_JR-100432) | sentara | Remote, region not stated: (Remote) | 2026-11-11 |  |
+| 52 | [Enterprise Analytics Consultant - Remote](https://sentara.wd1.myworkdayjobs.com/SCS/job/Enterprise-Analytics-Consultant---Remote_JR-103144) | sentara | Remote, region not stated: (Remote) | 2026-10-18 |  |
+| 49 | [(Associate) Project Lead- Business Analytics](https://qiagen.wd502.myworkdayjobs.com/qiagen/job/Wroclaw/Senior-Manager-Business-Analytics_JR00001062) | qiagen | Poland, office or hybrid: Wroclaw | 2026-11-13 | office days |
 
 ## Parallel work (alongside the current contract): new today
 
 | Score | Role | Company | Where | Posted | Notes |
 |---|---|---|---|---|---|
-| 87 | [Power BI Sales Performance Dashboard](https://www.freelancer.com/projects/business-intelligence/Power-Sales-Performance-Dashboard) | Freelancer.com client | Remote, Europe or worldwide: Worldwide (remote) |  | freelance / contract: "freelance"; freelance / contract (in text): "freelance" |
-| 57 | [Therapeutic Analytics Lead, Clinical Trial Strategy](https://iqvia.wd1.myworkdayjobs.com/IQVIA/job/Warsaw-Poland/Therapeutic-Analytics-Lead--Clinical-Trial-Strategy_R1576862) | iqvia | Poland, office or hybrid: Warsaw, Poland | 2026-10-28 | part-time: "part-time" |
+| 71 | [Financial Analyst/ Analityk Finansowy/ Analityczka Finansowa](https://pae.wd1.myworkdayjobs.com/Amentum_Careers/job/OCONUS-Poland-Krakow/Financial-Analyst--Analityk-Finansowy_R0174495-1) | pae | Poland, office or hybrid: OCONUS-Poland-Krakow | 2026-11-02 | other timezone (late-afternoon work): "overlap with the us"; short-term (up to 12 months): "fixed term" |
+| 62 | [Contract Analyst](https://premierinc.wd1.myworkdayjobs.com/External_Professional/job/Remote/Contract-Analyst_R0008618) | premierinc | Remote, region not stated: Remote | 2026-11-24 | part-time: "part-time"; freelance / contract: "contract" |
+| 56 | [Software Engineer (Platform/Backend) - UEM Reporting Pipeline](https://omnissa.wd501.myworkdayjobs.com/Omnissa_External_Career_Site/job/Atlanta-Georgia-Office/Software-Engineer--Platform-Backend----UEM-Reporting-Pipeline_R-102431) | omnissa | Remote, other timezone, open to people abroad: Atlanta, Georgia Office, Remote - Mexico, Remote - Canada | 2026-11-10 | other timezone (late-afternoon work): "central time zone" |
+| 54 | [Senior Contract Analyst](https://premierinc.wd1.myworkdayjobs.com/External_Professional/job/Remote/Senior-Contract-Analyst_R0008617) | premierinc | Remote, region not stated: Remote | 2026-11-24 | freelance / contract: "contract" |
 
 ## Roles: still open
 
@@ -71,6 +74,7 @@
 | 66 | [Product Owner, Data Analytics and Visualization](https://aptiv.wd5.myworkdayjobs.com/APTIV_CAREERS/job/Krakow-Poland/Product-Owner---Data-Analytics-and-Visualization_J000705847) | aptiv | Poland, remote mentioned in the text: Krakow, Poland | 2026-11-09 |  |
 | 66 | [IT Product Manager](https://jobs.smartrecruiters.com/eurofins/744000163669269) | eurofins | Poland, office or hybrid: Katowice, Silesian Voivodeship, pl | 2026-11-25 | office days |
 | 66 | [Senior Product Manager – Retail Media Data, Measurement & Auction Strategy (m/f/d)](https://jobs.smartrecruiters.com/redcare-pharmacy/744000158091479) | redcare-pharmacy | Text says remote from Poland or Europe: Köln, NRW, de | 2026-10-27 |  |
+| 66 | [Senior Product Manager, Data](https://nexstar.wd5.myworkdayjobs.com/nexstar/job/NY-New-York1301-Avenue-of-the-Americas-Nexstar/Senior-Product-Manager--Data_REQ-43068) | nexstar | Text says remote from Poland or Europe: NY-New York;1301 Avenue of the Americas (Nexstar) | 2026-09-18 |  |
 | 66 | [AI-Native Business Consultant](https://ttms.traffit.com/public/an/18ba8c457e6b83de281d8e58faf0fef9447339594e413d3d?source=career_page) | ttms | Location unclear, remote mentioned:  | 2026-09-15 |  |
 | 66 | [Lead Solutions Architect - Generative AI (EMEA Emerging DNB)](https://weworkremotely.com/remote-jobs/databricks-lead-solutions-architect-generative-ai-emea-emerging-dnb) | Databricks | Remote, Europe or worldwide: Anywhere in the World |  |  |
 | 66 | [Business Intelligence Data Architect](https://www.contentstack.com/company/careers/8045018003?gh_jid=8045018003) | contentstack | Remote, Europe or worldwide: Remote - Netherlands or Portgual / Europe | 2026-11-12 |  |
@@ -101,7 +105,7 @@
 | 60 | [Business Intelligence Analyst (Bidding Platform)](https://job-boards.eu.greenhouse.io/rtbhouse/jobs/5000658101) | rtbhouse | Poland, remote mentioned in the text: Warsaw, Masovian Voivodeship, Poland / Poland | 2026-11-04 |  |
 | 60 | [Principal Product Manager – Database Change Governance, Security & Ecosystem Integrations (Remote, US-Based)](https://www.liquibase.com/company/careers?gh_jid=8011001) | liquibase | Remote, region not stated: Remote | 2026-10-19 |  |
 | 59 | [AI Enablement Expert](https://11bitstudios.recruitee.com/o/ai-enablement-expert) | 11bitstudios | Poland, remote mentioned in the text: Warszawa, Mazowieckie, Poland | 2026-11-09 |  |
-| 59 | [Software and Solution Architect](https://job-boards.eu.greenhouse.io/eqtpartners/jobs/4880244101) | eqtpartners | Poland, office or hybrid: Warszawa, Masovian Voivodeship, Poland / Warsaw | 2026-11-27 | office days |
+| 59 | [Software and Solution Architect](https://job-boards.eu.greenhouse.io/eqtpartners/jobs/4880244101) | eqtpartners | Poland, office or hybrid: Warszawa, Masovian Voivodeship, Poland / Warsaw | 2026-11-28 | office days |
 | 59 | [Senior Solutions Engineer - Presales](https://job-boards.eu.greenhouse.io/lighthouse/jobs/5020412101) | lighthouse | Text says remote from Poland or Europe: Barcelona, Spain / Barcelona Office | 2026-11-04 |  |
 | 59 | [Analytics Implementation Consultant](https://job-boards.eu.greenhouse.io/sportygroup/jobs/4933981101) | sportygroup | Remote, Europe or worldwide: Europe - Remote | 2026-09-22 |  |
 | 59 | [Consultant, Business Intelligence](https://job-boards.greenhouse.io/apiphani/jobs/5236591007) | apiphani | Remote, region not stated: Remote | 2026-11-09 |  |
@@ -121,9 +125,8 @@
 | 57 | [Head of Data & Analytics (iGaming)](https://jobs.lever.co/jobgether/076bcfae-d0ba-4b59-b7d4-3523fc5a00a7) | jobgether | Text says remote from Poland or Europe: Belgium (remote) | 2026-11-27 |  |
 | 57 | [Security Business Analyst with Microsoft Fabric](https://jobs.smartrecruiters.com/eurofins/744000163669459) | eurofins | Poland, office or hybrid: Katowice, Silesian Voivodeship, pl | 2026-11-25 | office days |
 | 57 | [Digital Analytics Manager (m/f/d) - Maternity cover](https://jobs.smartrecruiters.com/redcare-pharmacy/744000160544194) | redcare-pharmacy | Text says remote from Poland or Europe: Cologne, de | 2026-11-09 |  |
+| 57 | [Data Product Owner](https://marathonhealth.wd501.myworkdayjobs.com/Marathon-Health-Careers/job/Remote/Data-Product-Owner_JR109043) | marathonhealth | Remote, region not stated: Remote | 2026-11-09 |  |
 | 57 | [Technical Product Manager, CRM & Communications Platform](https://www.outsideinc.com/openings?gh_jid=5425061008) | outside | Remote, region not stated: Remote | 2026-10-07 |  |
-| 56 | [Director, Data Strategy & Analytics](https://cambiumlearning.wd1.myworkdayjobs.com/camb/job/Remote/Director--Data-Strategy---Analytics_REQ-4643) | cambiumlearning | Remote, region not stated: Remote | 2026-10-13 |  |
-| 56 | [Senior Technical Product Manager (Sr TPM), Learning Intelligence](https://cambiumlearning.wd1.myworkdayjobs.com/camb/job/Remote/Senior-Technical-Product-Manager--Sr-TPM---Learning-Intelligence_REQ-4596) | cambiumlearning | Remote, region not stated: Remote | 2026-09-23 |  |
 
 ## Parallel work: still open
 
@@ -132,6 +135,7 @@
 | 91 | [Microsoft Fabric Architect](https://chabre.traffit.com/public/an/bcbe7466c74ea5f6aca1583d423f8f4e465a3962?source=career_page) | chabre | Poland, remote mentioned in the text: Warszawa, Polska | 2026-11-05 | audit / assessment: "optimisation, scalability, capacity" |
 | 89 | [1231 / Data & BI Specialist (Long-term, Part-time)](https://apply.workable.com/j/B8DB543943) | intetics-2 | Poland, remote: Poland | 2026-11-20 | part-time: "part-time" |
 | 87 | [Data Engineer, AI & Analytics (Remote - Contractor)](https://jobs.ashbyhq.com/masabi/9bab4382-fdaa-476e-b7f4-5ee746005e5b) | masabi | Poland, remote: Poland | 2026-11-26 | freelance / contract: "contractor"; freelance / contract (in text): "contract role"; short-term (up to 12 months): "12-month fixed-term contract" |
+| 87 | [Power BI Sales Performance Dashboard](https://www.freelancer.com/projects/business-intelligence/Power-Sales-Performance-Dashboard) | Freelancer.com client | Remote, Europe or worldwide: Worldwide (remote) |  | freelance / contract: "freelance"; freelance / contract (in text): "freelance" |
 | 87 | [Live Multi City Inventory Dashboard](https://www.freelancer.com/projects/google-sheets/Live-Multi-City-Inventory-Dashboard) | Freelancer.com client | Remote, Europe or worldwide: Worldwide (remote) |  | freelance / contract: "freelance"; freelance / contract (in text): "freelance" |
 | 86 | [Data Platform Product Owner / Business Analyst](https://jobs.lever.co/margo-group/227cc1e8-7106-441b-af26-436cbdf9caa8) | margo-group | Poland, remote: Warsaw (remote) | 2026-09-28 | freelance / contract: "contract" |
 | 85 | [Data Analytics Consultant (m/f/n)](https://jobs.smartrecruiters.com/inpost/744000162498779) | inpost | Poland, remote: Warszawa, Województwo mazowieckie, pl | 2026-11-19 | freelance / contract (in text): "b2b contract" |
@@ -191,6 +195,7 @@
 | 57 | [Fund Reporting Analyst](https://boards.greenhouse.io/point72/jobs/8780031002?gh_jid=8780031002) | point72 | Poland, office or hybrid: Warsaw / Poland | 2026-11-25 | fractional / interim: "interim" |
 | 57 | [Data Analytics Specialist](https://dssmith.wd3.myworkdayjobs.com/careers/job/Krakow/Data-Analytics-Specialist_R-15397) | dssmith | Poland, office or hybrid: Krakow | 2026-11-24 | audit / assessment: "auditing reports" |
 | 57 | [Data Architect - Critical Network Infrastructure](https://incubly.traffit.com/public/an/f28489719f40748f6bc92e370b7a97f14b643438?source=career_page) | incubly | Poland, office or hybrid: Łódź, Polska | 2026-11-08 | freelance / contract (in text): "b2b contract" |
+| 57 | [Therapeutic Analytics Lead, Clinical Trial Strategy](https://iqvia.wd1.myworkdayjobs.com/IQVIA/job/Warsaw-Poland/Therapeutic-Analytics-Lead--Clinical-Trial-Strategy_R1576862) | iqvia | Poland, office or hybrid: Warsaw, Poland | 2026-10-28 | part-time: "part-time" |
 | 57 | [Lead Instructor: Data Analytics (Somali speaking)](https://job-boards.greenhouse.io/correlationone/jobs/6240917004) | correlationone | Remote, region not stated: Remote | 2026-11-09 | freelance / contract (in text): "freelance"; audit / assessment: "review and assess remote analytics"; may require Arabic |
 | 57 | [Data Analyst, Commercial Analytics](https://jobs.ashbyhq.com/virtahealth/299542f8-4476-448d-883d-df8bbff5e252) | virtahealth | Remote, region not stated: Remote | 2026-11-13 | audit / assessment: "review existing client reports" |
 | 57 | [Data Product Owner (12-month contract)](https://triggerise.bamboohr.com/careers/714) | triggerise | Remote, region not stated: (remote) |  | freelance / contract: "contract"; short-term (up to 12 months): "12-month contract" |
@@ -213,26 +218,26 @@
 | Source | Companies known | Checked today | Jobs read | Matches | Gone | Errors | Note |
 |---|---|---|---|---|---|---|---|
 | adzuna | 0 | 1 | 0 | 0 | 0 | 1 | RuntimeError: no ADZUNA_APP_ID / ADZUNA_APP_KEY secret: skipped |
-| arbeitnow | 0 | 1 | 1467 | 0 | 0 | 0 |  |
-| ashby | 4725 | 3747 | 60567 | 25 | 4 | 0 |  |
-| bamboohr | 12656 | 9901 | 52456 | 27 | 14 | 2741 |  |
-| breezy | 3827 | 2785 | 29912 | 1 | 1038 | 4 |  |
-| freelancer | 0 | 1 | 55 | 3 | 0 | 0 |  |
-| greenhouse | 11931 | 7816 | 216732 | 97 | 3 | 0 | slowed down 20 times |
+| arbeitnow | 0 | 1 | 1475 | 0 | 0 | 0 |  |
+| ashby | 4725 | 3744 | 60520 | 25 | 7 | 0 |  |
+| bamboohr | 12656 | 9899 | 52463 | 27 | 0 | 4 |  |
+| breezy | 3827 | 2783 | 29925 | 1 | 2 | 0 |  |
+| freelancer | 0 | 1 | 60 | 3 | 0 | 0 |  |
+| greenhouse | 11931 | 7810 | 216935 | 97 | 10 | 0 | slowed down 17 times |
 | hackernews | 0 | 1 | 734 | 0 | 0 | 0 |  |
 | himalayas | 0 | 1 | 200 | 0 | 0 | 0 |  |
-| jobicy | 0 | 1 | 196 | 0 | 0 | 0 |  |
+| jobicy | 0 | 1 | 197 | 0 | 0 | 0 |  |
 | jooble | 0 | 1 | 0 | 0 | 0 | 1 | RuntimeError: no JOOBLE_KEY secret: skipped |
-| lever | 2536 | 1935 | 65363 | 11 | 0 | 0 |  |
-| lever_eu | 126 | 87 | 3284 | 1 | 0 | 0 |  |
-| personio | 7471 | 3533 | 28172 | 1 | 747 | 0 | slowed down 38 times |
-| pinpoint | 89 | 88 | 2698 | 0 | 1 | 0 |  |
-| recruitee | 1172 | 750 | 13938 | 7 | 20 | 0 | asked to slow down 40 times; the rest waits for the next run |
+| lever | 2536 | 1935 | 65708 | 11 | 0 | 0 |  |
+| lever_eu | 126 | 87 | 3279 | 1 | 0 | 0 |  |
+| personio | 7471 | 3918 | 31004 | 1 | 506 | 0 | slowed down 36 times |
+| pinpoint | 89 | 88 | 2685 | 0 | 0 | 0 |  |
+| recruitee | 1172 | 759 | 13735 | 7 | 3 | 0 | asked to slow down 40 times; the rest waits for the next run |
 | remoteok | 0 | 1 | 100 | 0 | 0 | 0 |  |
-| remotive | 0 | 1 | 17 | 0 | 0 | 0 |  |
-| smartrecruiters | 2843 | 2841 | 59721 | 14 | 0 | 0 |  |
-| teamtailor | 3747 | 1250 | 14327 | 0 | 1 | 0 |  |
-| traffit | 546 | 437 | 6334 | 26 | 0 | 0 |  |
+| remotive | 0 | 1 | 16 | 0 | 0 | 0 |  |
+| smartrecruiters | 2843 | 2841 | 59715 | 14 | 0 | 0 |  |
+| teamtailor | 3747 | 1250 | 14305 | 0 | 1 | 0 |  |
+| traffit | 546 | 437 | 6333 | 25 | 0 | 0 |  |
 | weworkremotely | 0 | 1 | 100 | 2 | 0 | 0 |  |
-| workable | 7498 | 1523 | 28062 | 2 | 89 | 0 | asked to slow down 40 times; the rest waits for the next run |
-| workday | 4358 | 684 | 4342 | 10 | 49 | 37 | time budget reached; the rest is checked on the next runs |
+| workable | 7498 | 121 | 1271 | 0 | 4 | 0 | asked to slow down 40 times; the rest waits for the next run |
+| workday | 4358 | 703 | 4276 | 23 | 15 | 39 | slowed down 2 times |
